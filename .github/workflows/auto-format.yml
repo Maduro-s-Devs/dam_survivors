@@ -1,0 +1,33 @@
+name: 🧹 Autoformatear código tras el merge a main
+description: Formatea el código automáticamente con Black después de aceptar un PR.
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout del código
+        uses: actions/checkout@v4
+
+      - name: 🐍 Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: 📦 Instalar Black
+        run: pip install black
+
+      - name: 🧹 Formatear código
+        run: black .
+
+      - name: 💾 Commit automático del formateo
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🧹 Código autoformateado con Black"
