@@ -7,6 +7,12 @@ public class HomingProjectile : MonoBehaviour
     private Vector3 targetDirection;
     private float damage;
 
+    private void Start()
+    {
+        // Ordena a Unity que destruya este objeto pasados 5 segundos
+        Destroy(gameObject, 5f);
+    }
+
     // Inicializa la dirección y el daño que lleva el proyectil
     public void SetDirectionAndDamage(Vector3 direction, float dmg)
     {
@@ -18,7 +24,7 @@ public class HomingProjectile : MonoBehaviour
 
     private void Update()
     {
-    // Mueve el proyectil en la dirección calculada (Auto Guiado)
+        // Mueve el proyectil en la dirección calculada (ultima posición del Enemigo)
         transform.position += targetDirection * projectileSpeed * Time.deltaTime;
     }
 
@@ -29,8 +35,6 @@ public class HomingProjectile : MonoBehaviour
         {
     // TODO: Aquí deberías llamar al script de vida del enemigo para aplicar 'damage'
     // Ejemplo: other.GetComponent<EnemyHealth>()?.TakeDamage(damage);
-
-            Debug.Log("Impacto con enemigo: " + other.name);
 
             Destroy(gameObject);
         }
