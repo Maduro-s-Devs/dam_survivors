@@ -8,16 +8,26 @@ public class OrbitalShieldLauncher : BaseLauncher
     [SerializeField] private GameObject orbPrefab;         // Prefab normal
     [SerializeField] private float rotationSpeed = 100f;   // Velocidad de giro
     [SerializeField] private float orbitRadius = 3f;       // Distancia al jugador
+    private float  defaultRotationSpeed = 100f;
+    private float  defaultOrbitRadius= 3f;
 
     [Header("Evolution")]
     [SerializeField] private int maxLevel = 10;
     [SerializeField] private GameObject ultimateOrbPrefab; // Prefab evolucionado
+    
+    [Header("Ajustes de Zona (Evolución)")]
+    [SerializeField] private float areaDamageInterval = 0.7f; // Cada cuánto hace daño el área (ticks)
+    [Range(0.1f, 1f)]
+    [SerializeField] private float areaDamageMultiplier = 0.5f; // % del daño base que aplica la zona (0.5 = 50%)
 
     // Lista para guardar las bolas que tenemos activas
     private List<GameObject> activeOrbs = new List<GameObject>();
     
     // Ángulo actual del "contenedor"
     private float currentRotation = 0f;
+
+    // Temporizador para el daño de área (Evolución)
+    private float areaTimer = 0f;
 
     protected override void Start()
     {
@@ -39,6 +49,12 @@ public class OrbitalShieldLauncher : BaseLauncher
         // Giramos el transform del lanzador
         // Calculamos la posición de cada bola manualmente.
         UpdateOrbPositions();
+
+        // LÓGICA DE EVOLUCIÓN: DAÑO EN ÁREA (CIRCUNFERENCIA COMPLETA)
+        if (level >= maxLevel)
+        {
+            ApplyAreaDamage();
+        }
     }
 
     // Esta función se llama cuando desbloqueamos el arma o subimos de nivel externamente
@@ -77,21 +93,26 @@ public class OrbitalShieldLauncher : BaseLauncher
 
         // Calcular cuántos orbes tocan
         // 3 Base + (Nivel / 2)
-        // Nivel 1 = 3 + 0 = 3
-        // Nivel 2 = 3 + 1 = 4
-        // Nivel 10 = 3 + 5 = 8
         int orbCount = 3 + (level / 2);
 
         // EVOLUCIÓN: Si es nivel máximo, ponemos MUCHOS más
         GameObject prefabToUse = orbPrefab;
-        float currentSpeed = rotationSpeed; // Variable local para velocidad
+        
+        // Reseteamos valores base antes de aplicar evolución si bajamos de nivel
+       if (level < maxLevel) 
+        {
+             // Restauramos los valores a su estado original (por si bajamos de nivel con el Debug)
+             rotationSpeed = defaultRotationSpeed;
+             orbitRadius = defaultOrbitRadius;
+        }
 
         if (level >= maxLevel)
         {
             orbCount += 10; // Bonus de evolución
             if (ultimateOrbPrefab != null) prefabToUse = ultimateOrbPrefab;
-            currentSpeed = 400f; // Gira muchísimo más rápido al evolucionar
-            orbitRadius = 6f;  
+            
+            rotationSpeed = 400f; // Actualizamos la variable global para que el Update gire rápido
+            orbitRadius = 4f;     // Actualizamos la variable global para que el área sea grande
         }
 
         // Spawneamos los orbes
@@ -102,7 +123,7 @@ public class OrbitalShieldLauncher : BaseLauncher
             {
                 GameObject newOrb = Instantiate(prefabToUse, transform.position, Quaternion.identity);
                 
-                // Configuramos daño
+                // Configuramos daño de la bola (Este sigue siendo el 100% del daño)
                 OrbitalProjectile script = newOrb.GetComponent<OrbitalProjectile>();
                 if (script != null) script.SetDamage(currentDamage);
 
@@ -136,6 +157,41 @@ public class OrbitalShieldLauncher : BaseLauncher
 
             // Centro del Jugador + Offset
             activeOrbs[i].transform.position = transform.position + new Vector3(x, 0, z);
+        }
+    }
+
+    // Nueva función para gestionar el daño de zona al evolucionar
+    private void ApplyAreaDamage()
+    {
+        areaTimer -= Time.deltaTime;
+
+        if (areaTimer <= 0f)
+        {
+            // Detectamos todo lo que esté dentro del radio del escudo
+            Collider[] enemiesInside = Physics.OverlapSphere(transform.position, orbitRadius, LayerMask.GetMask("Enemy"));
+
+            foreach (var hit in enemiesInside)
+            {
+                EnemyController enemy = hit.GetComponent<EnemyController>();
+                if (enemy != null)
+                {
+                    // Aplicamos solo un porcentaje del daño total indicado en areaDamageMultiplier, así el área debilita, pero las bolas siguen siendo importantes para rematar.
+                    enemy.TakeDamage(currentDamage * areaDamageMultiplier);
+                }
+            }
+
+            // Reiniciamos el timer
+            areaTimer = areaDamageInterval;
+        }
+    }
+
+    // Dibujamos el área de efecto en el editor para verla
+    private void OnDrawGizmosSelected()
+    {
+        if (level >= maxLevel)
+        {
+            Gizmos.color = new Color(1, 0, 0, 0.2f); // Rojo transparente suave
+            Gizmos.DrawSphere(transform.position, orbitRadius);
         }
     }
 }
