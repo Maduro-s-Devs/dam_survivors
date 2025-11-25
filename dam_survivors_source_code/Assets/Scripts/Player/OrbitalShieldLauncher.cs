@@ -108,11 +108,11 @@ public class OrbitalShieldLauncher : BaseLauncher
 
         if (level >= maxLevel)
         {
-            orbCount += 10; // Bonus de evolución
+            orbCount += 5; // Bonus de evolución
             if (ultimateOrbPrefab != null) prefabToUse = ultimateOrbPrefab;
             
-            rotationSpeed = 400f; // Actualizamos la variable global para que el Update gire rápido
-            orbitRadius = 4f;     // Actualizamos la variable global para que el área sea grande
+            rotationSpeed = 200f; // Actualizamos la variable global para que el Update gire rápido
+            orbitRadius = 6f;     // Actualizamos la variable global para que el área sea grande
         }
 
         // Spawneamos los orbes
