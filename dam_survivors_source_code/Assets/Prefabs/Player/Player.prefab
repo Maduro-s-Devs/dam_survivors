@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6431505717009396933}
   - component: {fileID: 751033678649503409}
   - component: {fileID: 9114710256661588021}
+  - component: {fileID: -1222932320447074633}
   - component: {fileID: 718726796792763832}
   - component: {fileID: 2103920527906256109}
   - component: {fileID: 6786892194294229164}
@@ -124,6 +125,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
   allWeapons:
   - {fileID: 718726796792763832}
+  - {fileID: -1222932320447074633}
+--- !u!114 &-1222932320447074633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560562008090355291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c9e3bcf0ec182444b8674b182d8db1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OrbitalShieldLauncher
+  isUnlocked: 0
+  baseDamage: 10
+  baseCooldown: 1.5
+  level: 1
+  orbPrefab: {fileID: 1855525870294912740, guid: 23d778e584563c847886336950966e53, type: 3}
+  rotationSpeed: 100
+  orbitRadius: 3
+  maxLevel: 10
+  ultimateOrbPrefab: {fileID: 2939099471646202379, guid: c076141c9d87e034eb9791814998a389, type: 3}
 --- !u!114 &718726796792763832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1fd9a7d89e11c141a18072e958a0faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MagicWandLauncher
-  isUnlocked: 1
+  isUnlocked: 0
   baseDamage: 35
   baseCooldown: 1
   level: 1

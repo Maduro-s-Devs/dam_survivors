@@ -1,4 +1,4 @@
-// Script lo porta el prefab del misil
+// Script lo porta el prefab del misil de la magicwand
 using UnityEngine;
 
 public class HomingProjectile : MonoBehaviour
