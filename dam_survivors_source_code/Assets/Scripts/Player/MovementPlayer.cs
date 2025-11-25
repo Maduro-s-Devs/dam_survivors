@@ -10,7 +10,7 @@ public class MovementPlayer : MonoBehaviour
     [Header("Ajustes")]
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private float acceleration = 12f; // Qué tan rápido arranca
-    [SerializeField] private float deceleration = 12f;  // Qué tan rápido frena (NUEVO)
+    [SerializeField] private float deceleration = 12f;  // Qué tan rápido frena 
 
     [SerializeField] private float rotationSpeed = 30f; 
 

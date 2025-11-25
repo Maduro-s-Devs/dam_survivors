@@ -1,10 +1,10 @@
+// Este script lo usa la camara
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CameraFollow : MonoBehaviour
 {
-    [Header("Target Settings")]
-    [SerializeField] private Transform target; 
+    private Transform target; 
 
     [Header("Offset Settings")]
     [SerializeField] private Vector3 offset = new Vector3(0f, 10f, -10f); 
@@ -33,6 +33,14 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
+        // Buscar al objeto con Tag "Player"
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            target = playerObj.transform;
+        }
+
+        // Si se encontró al Player, calculamos el offset inicial si hace falta
         if (target != null && offset == Vector3.zero)
         {
             offset = transform.position - target.position;

@@ -1,6 +1,8 @@
 // este script, lo llevan todos los enemigos menos el Boss
 using UnityEngine;
 
+// Añadimos esto para asegurarnos de que el enemigo tenga físicas
+[RequireComponent(typeof(Rigidbody))]
 public class EnemyController : MonoBehaviour
 {
     [Header("Estadísticas del Enemigo")]
@@ -12,11 +14,16 @@ public class EnemyController : MonoBehaviour
     private Transform playerTransform; // Referencia para saber dónde está el jugador
     private float currentHealth;       // Vida actual
     private float currentSpeed = 0f;   // Velocidad actual (empieza en 0 y sube)
+    
+    private Rigidbody rb;              // Referencia al componente físico
 
     private void Start()
     {
         // Inicializar vida
         currentHealth = maxHealth;
+
+        // Obtener el Rigidbody para las físicas
+        rb = GetComponent<Rigidbody>();
 
         // Buscar al jugador automáticamente por su Tag
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -30,7 +37,8 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void Update()
+    // Usamos FixedUpdate en lugar de Update para cálculos de físicas constantes
+    private void FixedUpdate()
     {
         // Si el jugador existe, moverse hacia él
         if (playerTransform != null)
@@ -44,19 +52,19 @@ public class EnemyController : MonoBehaviour
         //  Calcular dirección (Destino - Origen)
         Vector3 direction = (playerTransform.position - transform.position).normalized;
 
-        // Calculamos la aceleración: Vamos aumentando currentSpeed hacia movementSpeed poco a poco
-        currentSpeed = Mathf.MoveTowards(currentSpeed, movementSpeed, acceleration * Time.deltaTime);
+        // Calculamos la aceleración
+        currentSpeed = Mathf.MoveTowards(currentSpeed, movementSpeed, acceleration * Time.fixedDeltaTime);
+        Vector3 targetVelocity = direction * currentSpeed;
 
-        // Usamos Space.World para movernos en coordenadas globales (usando la velocidad actual suavizada)
-        transform.position += direction * currentSpeed * Time.deltaTime;
+        // Mantenemos la Y original (rb.linearVelocity.y) para respetar la gravedad
+        rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
 
         // Mirar al jugador (para que el modelo rote)
-        // Bloqueamos la rotación en X y Z para que no se incline
         Vector3 lookPos = new Vector3(playerTransform.position.x, transform.position.y, playerTransform.position.z);
         transform.LookAt(lookPos);
     }
 
-    // Esta función será llamada por tus armas
+    // Esta función será llamada por las armas
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
@@ -69,20 +77,16 @@ public class EnemyController : MonoBehaviour
 
     private void Die()
     {
-        // Lógica de soltar experiencia
-        // Ejemplo: Instantiate(xpOrbPrefab, transform.position, Quaternion.identity);
-
+        // Soltar experiencia
         Destroy(gameObject);
     }
 
-    // Lógica para dañar al jugador al chocar
+    // Dañar al jugador al chocar
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Aquí llamaríamos al script del jugador para hacerle daño
-            // Ejemplo: collision.gameObject.GetComponent<PlayerHealth>()?.TakeDamage(damage);
-            // Debug.Log("Atacando al jugador!");
+            // Lógica de daño al jugador
         }
     }
 }

@@ -42,13 +42,18 @@ public class HomingProjectile : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+   private void OnTriggerEnter(Collider other)
     {
-        // Verificamos si el objeto con el que chocamos es un enemigo
         if (other.CompareTag("Enemy"))
         {
-            // Aquí deberías llamar al script de vida del enemigo
-            // other.GetComponent<EnemyHealth>()?.TakeDamage(damage);
+            // Buscamos el componente EnemyController
+            EnemyController enemy = other.GetComponent<EnemyController>();
+            
+            if (enemy != null)
+            {
+                // Aplicamos daño
+                enemy.TakeDamage(damage);
+            }
 
             Debug.Log("Impacto Teledirigido con: " + other.name);
             Destroy(gameObject);
