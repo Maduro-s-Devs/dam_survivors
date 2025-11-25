@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07900968c7b97bc4faa0ca5a06a4f6f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  movementSpeed: 6
+  movementSpeed: 15
   acceleration: 3
-  maxHealth: 75
+  maxHealth: 50
   damage: 25

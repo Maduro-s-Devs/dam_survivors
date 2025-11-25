@@ -137,8 +137,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MagicWandLauncher
   isUnlocked: 1
-  baseDamage: 50
-  baseCooldown: 1.5
+  baseDamage: 35
+  baseCooldown: 1
   level: 1
   projectilePrefab: {fileID: 529050735086040035, guid: 43a6a24f506a6ac40871d7a9d22a925c, type: 3}
   baseTargets: 2

@@ -12,7 +12,7 @@ public class MagicWandLauncher : BaseLauncher
     [SerializeField] private float searchRadius = 15f; 
     [SerializeField] private float spawnDelayBetweenMissiles = 0.2f; 
 
-    [Header("Evolución Final (Nivel Máximo)")]
+    [Header("Final Evolution")]
     [SerializeField] private int maxLevel = 10;           // Niveles para evolucionar
     [SerializeField] private GameObject ultimatePrefab;   // El misil evolucionado 
     [SerializeField] private int ultimateTargets = 20;    // A cuantos dispara cuando evoluciona

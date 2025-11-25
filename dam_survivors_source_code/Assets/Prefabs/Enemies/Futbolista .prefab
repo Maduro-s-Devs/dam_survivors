@@ -156,5 +156,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   movementSpeed: 2
   acceleration: 2
-  maxHealth: 300
+  maxHealth: 500
   damage: 60
