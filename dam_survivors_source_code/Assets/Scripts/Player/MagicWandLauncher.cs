@@ -1,3 +1,4 @@
+// este script lo lleva el player
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic; 
@@ -53,7 +54,7 @@ public class MagicWandLauncher : BaseLauncher
             if (homingScript != null)
             {
                 // currentDamage viene heredado de BaseLauncher
-                homingScript.SetDirectionAndDamage(direction, currentDamage); 
+                homingScript.SetTargetAndDamage(targetEnemy, currentDamage);
             }
             
             // Esperar antes del siguiente misil

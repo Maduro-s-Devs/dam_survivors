@@ -1,3 +1,4 @@
+// este script, lo lleva el player
 using UnityEngine;
 
 public class BaseLauncher : MonoBehaviour
