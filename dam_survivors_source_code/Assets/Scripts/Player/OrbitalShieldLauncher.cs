@@ -123,7 +123,7 @@ public class OrbitalShieldLauncher : BaseLauncher
             {
                 GameObject newOrb = Instantiate(prefabToUse, transform.position, Quaternion.identity);
                 
-                // Configuramos daño de la bola (Este sigue siendo el 100% del daño)
+                // Configuramos daño de la bola
                 OrbitalProjectile script = newOrb.GetComponent<OrbitalProjectile>();
                 if (script != null) script.SetDamage(currentDamage);
 
@@ -160,7 +160,7 @@ public class OrbitalShieldLauncher : BaseLauncher
         }
     }
 
-    // Nueva función para gestionar el daño de zona al evolucionar
+    // Gestionar el daño de zona al evolucionar
     private void ApplyAreaDamage()
     {
         areaTimer -= Time.deltaTime;

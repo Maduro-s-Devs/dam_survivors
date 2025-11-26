@@ -41,7 +41,7 @@ public class BaseLauncher : MonoBehaviour
         }
     }
 
-    // Método que llamará tu UI para desbloquear el arma
+    // Método que llamará tu UI para desbloquear el arma (Marcos)
     public void ActivateWeapon()
     {
         isUnlocked = true;
