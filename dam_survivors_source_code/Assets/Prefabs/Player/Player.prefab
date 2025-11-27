@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 9114710256661588021}
   - component: {fileID: -1222932320447074633}
   - component: {fileID: 718726796792763832}
+  - component: {fileID: 429117126093478060}
   - component: {fileID: 2103920527906256109}
   - component: {fileID: 6786892194294229164}
   m_Layer: 0
@@ -126,6 +127,7 @@ MonoBehaviour:
   allWeapons:
   - {fileID: 718726796792763832}
   - {fileID: -1222932320447074633}
+  - {fileID: 429117126093478060}
 --- !u!114 &-1222932320447074633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,6 +174,25 @@ MonoBehaviour:
   maxLevel: 10
   ultimatePrefab: {fileID: 7748824701438145369, guid: 23ca22f08e29fdd4bbac2a906a373958, type: 3}
   ultimateTargets: 20
+--- !u!114 &429117126093478060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560562008090355291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7900bda6bbe30354a8e3a3e28dd2369e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MolotovLauncher
+  isUnlocked: 0
+  baseDamage: 60
+  baseCooldown: 10
+  level: 1
+  molotovPrefab: {fileID: 1432756740983376002, guid: 6c196a655f4d17f4680b1ebcc5789e92, type: 3}
+  throwRange: 8
+  arcHeight: 5
 --- !u!136 &2103920527906256109
 CapsuleCollider:
   m_ObjectHideFlags: 0
