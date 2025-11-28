@@ -132,5 +132,5 @@ MonoBehaviour:
   napalmRadius: 6
   napalmDamageInterval: 1
   explosionVFX: {fileID: 0}
-  napalmStartVFX: {fileID: 0}
-  napalmZoneVFX: {fileID: 0}
+  napalmStartVFX: {fileID: 2025240173452038634, guid: aee24ffd171fd4a4487cd99945498411, type: 3}
+  napalmZoneVFX: {fileID: 1800262638194428289, guid: b52589328b920aa48a201d35a916d7a6, type: 3}

@@ -12,24 +12,25 @@ public class MagicWandLauncher : BaseLauncher
     [SerializeField] private float searchRadius = 15f; 
     [SerializeField] private float spawnDelayBetweenMissiles = 0.2f; 
 
-    [Header("Final Evolution")]
-    [SerializeField] private int maxLevel = 10;           // Niveles para evolucionar
-    [SerializeField] private GameObject ultimatePrefab;   // El misil evolucionado 
+    [Header("Evolución Final (Nivel Máximo)")]
+    [SerializeField] private int maxLevel = 10;           // Nivel para evolucionar
+    [SerializeField] private GameObject ultimatePrefab;   // El misil evolucionado
     [SerializeField] private int ultimateTargets = 20;    // A cuantos dispara cuando evoluciona
 
+    // Sobrescribimos la función de disparo
     protected override void AttemptToFire() 
     {
-        // Cálculo de objetivos según nivel (Base + Nivel)
-        int currentTargetsToFind = baseTargets + (level - 1);
+        // Cálculo de objetivos (Cuántas balas tenemos)
+        int bulletsToFire = baseTargets + (level - 1);
         GameObject prefabToUse = projectilePrefab;
 
         // Comprobación de Evolución
         if (level >= maxLevel)
         {
-            currentTargetsToFind = ultimateTargets; // Dispara a todo el mundo
+            bulletsToFire = ultimateTargets; 
             if (ultimatePrefab != null) 
             {
-                prefabToUse = ultimatePrefab; // Cambia la apariencia
+                prefabToUse = ultimatePrefab; 
             }
         }
 
@@ -38,19 +39,29 @@ public class MagicWandLauncher : BaseLauncher
         
         if (hitColliders.Length > 0)
         {
-            // Ordenar por cercanía y coger solo los necesarios
-            List<Transform> closestEnemies = hitColliders
+            // Ordenamos los enemigos disponibles por distancia (pero NO los recortamos aún)
+            List<Transform> availableEnemies = hitColliders
                 .Select(col => new { 
                     Trans = col.transform, 
                     Dist = Vector3.Distance(transform.position, col.transform.position) 
                 })
                 .OrderBy(x => x.Dist)
-                .Take(currentTargetsToFind)
                 .Select(x => x.Trans)
                 .ToList();
 
-            // Disparar
-            StartCoroutine(SpawnMissiles(closestEnemies, prefabToUse));
+            // Creamos la lista final de objetivos (Round Robin)
+            // Si tengo 5 balas y 2 enemigos, llenamos la lista así: [E1, E2, E1, E2, E1]
+            List<Transform> finalTargets = new List<Transform>();
+
+            for (int i = 0; i < bulletsToFire; i++)
+            {
+                // Usamos el operador resto (%) para volver al principio de la lista si se acaban los enemigos
+                int enemyIndex = i % availableEnemies.Count;
+                finalTargets.Add(availableEnemies[enemyIndex]);
+            }
+
+            // Disparar la lista completa
+            StartCoroutine(SpawnMissiles(finalTargets, prefabToUse));
         }
     }
 
@@ -58,16 +69,17 @@ public class MagicWandLauncher : BaseLauncher
     {
         foreach (Transform targetEnemy in targets)
         {
+            // Seguridad: Si el enemigo muere antes de que le toque su segunda bala,
+            // Unity devolverá null. Saltamos ese disparo para no dar error.
             if (targetEnemy == null) continue;
 
-            // Instanciamos el proyectil elegido
+            // Instanciamos el proyectil
             GameObject missile = Instantiate(prefab, transform.position, Quaternion.identity);
             
-            // Configuramos el script del misil
+            // Configuramos el misil 
             HomingProjectile homingScript = missile.GetComponent<HomingProjectile>();
             if (homingScript != null)
             {
-                // currentDamage viene multiplicado por nivel gracias a BaseLauncher
                 homingScript.SetTargetAndDamage(targetEnemy, currentDamage);
             }
             
