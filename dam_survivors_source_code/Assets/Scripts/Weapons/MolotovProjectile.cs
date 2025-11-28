@@ -9,8 +9,16 @@ public class MolotovProjectile : MonoBehaviour
     [SerializeField] private float flightDuration = 1f;  // Tiempo de vuelo
     [SerializeField] private float delayBetweenExplosions = 0.3f; // Ritmo de las explosiones
     
+    [Header("Configuración Evolución")]
+    [SerializeField] private int maxLevel = 10;
+    [SerializeField] private float napalmDuration = 5f;      // Cuánto dura el fuego en el suelo
+    [SerializeField] private float napalmRadius = 6f;        // Radio gigante
+    [SerializeField] private float napalmDamageInterval = 1.0f; // Daño por tick
+
     [Header("Efectos Visuales")]
-    [SerializeField] private GameObject explosionVFX;    // Prefab del efecto de explosión (Futuro VFX)
+    [SerializeField] private GameObject explosionVFX;    // Explosión Normal (Niveles 1-9)
+    [SerializeField] private GameObject napalmStartVFX;  // Explosión Inicial (Nivel 10)
+    [SerializeField] private GameObject napalmZoneVFX;   // Fuego persistente (Suelo)
 
     // Variables internas
     private Vector3 startPos;
@@ -62,17 +70,25 @@ public class MolotovProjectile : MonoBehaviour
         GetComponent<Renderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
 
-        // Iniciamos la secuencia
-        StartCoroutine(ProcessExplosions());
+        // ¿Modo Normal o Modo Napalm?
+        if (weaponLevel >= maxLevel)
+        {
+            StartCoroutine(NapalmMode());
+        }
+        else
+        {
+            StartCoroutine(ProcessExplosions());
+        }
     }
 
+    // --- EXPLOSIONES EN CADENA (Niveles 1-9) ---
     private IEnumerator ProcessExplosions()
     {
-        // 1. EXPLOSIÓN PRINCIPAL (Roja)
-        CreateExplosion(transform.position, true);
+        // EXPLOSIÓN PRINCIPAL (Usa el VFX normal)
+        CreateExplosion(transform.position, true, explosionVFX);
         yield return new WaitForSeconds(delayBetweenExplosions);
 
-        // 2. EXPLOSIONES EXTRA (Naranjas) - 1 por nivel extra
+        // EXPLOSIONES EXTRA - 1 por nivel extra
         int extraExplosions = weaponLevel - 1;
 
         for (int i = 0; i < extraExplosions; i++)
@@ -83,7 +99,7 @@ public class MolotovProjectile : MonoBehaviour
             // Dibujamos una línea verde en la escena para ver dónde va
             Debug.DrawLine(transform.position, extraPos, Color.green, 1f);
 
-            CreateExplosion(extraPos, false);
+            CreateExplosion(extraPos, false, explosionVFX);
             
             yield return new WaitForSeconds(delayBetweenExplosions);
         }
@@ -91,49 +107,85 @@ public class MolotovProjectile : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void CreateExplosion(Vector3 center, bool isMain)
+    // --- ZONA DE NAPALM (Nivel 10+) ---
+    private IEnumerator NapalmMode()
     {
-        // --- FUTURO VFX: INSTANCIAR EXPLOSIÓN ---
-        if (explosionVFX != null)
+        Debug.Log("¡MOLOTOV EVOLUCIONADO! Zona de Napalm activada.");
+
+        // EXPLOSIÓN INICIAL ESPECÍFICA (Usa el VFX de Napalm Start)
+        // Esto hace el daño de impacto inicial y muestra la explosión única
+        CreateExplosion(transform.position, true, napalmStartVFX);
+
+        // Instanciar VFX de Fuego Persistente (Suelo)
+        GameObject fireZone = null;
+        if (napalmZoneVFX != null)
         {
-            Instantiate(explosionVFX, center, Quaternion.identity);
+            fireZone = Instantiate(napalmZoneVFX, transform.position, Quaternion.identity);
         }
         
-        // --- VISUALIZACIÓN DEBUG ---
-        // (Esto sustituye al VFX mientras no lo tenemos)
+        // Bucle de Daño en el tiempo (DoT)
+        float timer = 0f;
+        while (timer < napalmDuration)
+        {
+            // Aplicar daño en el radio gigante (reutilizamos la lógica de daño)
+            ApplyDamageToArea(transform.position, napalmRadius, damage * 1f); // 100% daño por tick
+
+            yield return new WaitForSeconds(napalmDamageInterval);
+            timer += napalmDamageInterval;
+        }
+
+        // Limpieza
+        if (fireZone != null) Destroy(fireZone);
+        Destroy(gameObject);
+    }
+
+    // Función unificada para crear explosiones con VFX personalizado
+    private void CreateExplosion(Vector3 center, bool isMain, GameObject vfxToUse)
+    {
+        // --- INSTANCIAR EXPLOSIÓN ---
+        if (vfxToUse != null)
+        {
+            Instantiate(vfxToUse, center, Quaternion.identity);
+        }
+        
+        // --- VISUALIZACIÓN DEBUG (Comentada) ---
+        /*
         GameObject debugSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         debugSphere.transform.position = center;
         debugSphere.transform.localScale = Vector3.one * (explosionRadius * 2); 
-        
-        Destroy(debugSphere.GetComponent<Collider>()); // Sin físicas
-        
-        Renderer rend = debugSphere.GetComponent<Renderer>();
-        if(rend != null) 
-        {
-            // Rojo para la principal, Naranja para las secundarias
-            rend.material.color = isMain ? new Color(1, 0, 0, 0.5f) : new Color(1, 0.5f, 0, 0.5f);
-        }
-        
-        Destroy(debugSphere, 0.5f); // Se borra en 0.5s
+        Destroy(debugSphere.GetComponent<Collider>()); 
+        Destroy(debugSphere, 0.5f); 
+        */
 
         // DAÑO EN ÁREA
-        Collider[] enemiesHit = Physics.OverlapSphere(center, explosionRadius, LayerMask.GetMask("Enemy"));
+        ApplyDamageToArea(center, explosionRadius, damage);
+        
+        if(weaponLevel < maxLevel)
+            Debug.Log($"¡BOOM! Explosión (Nivel Arma: {weaponLevel})");
+    }
+
+    // Función auxiliar para aplicar daño (para no repetir código)
+    private void ApplyDamageToArea(Vector3 center, float radius, float dmgAmount)
+    {
+        Collider[] enemiesHit = Physics.OverlapSphere(center, radius, LayerMask.GetMask("Enemy"));
         
         foreach (Collider hit in enemiesHit)
         {
             EnemyController enemy = hit.GetComponent<EnemyController>();
             if (enemy != null)
             {
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(dmgAmount);
             }
         }
-        
-        Debug.Log($"¡BOOM! Explosión (Nivel Arma: {weaponLevel})");
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, explosionRadius);
+        
+        // Dibujamos también el radio de Napalm en Naranja para verlo en el editor
+        Gizmos.color = new Color(1, 0.5f, 0, 1);
+        Gizmos.DrawWireSphere(transform.position, napalmRadius);
     }
 }

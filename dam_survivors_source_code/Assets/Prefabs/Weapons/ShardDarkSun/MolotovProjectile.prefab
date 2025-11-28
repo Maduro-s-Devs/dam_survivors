@@ -127,3 +127,4 @@ MonoBehaviour:
   explosionRadius: 3
   flightDuration: 1
   delayBetweenExplosions: 0.5
+  explosionVFX: {fileID: 8005277291160928309, guid: a15c0363232eb0441970986d1f3f640b, type: 3}
