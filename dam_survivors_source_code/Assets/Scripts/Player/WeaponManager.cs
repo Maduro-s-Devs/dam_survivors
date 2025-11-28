@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class WeaponManager : MonoBehaviour
 {
-    [Header("Inventario de Armas")]
+    [Header("Weapon stash")]
     // Todos los scripts de armas que tenga el Player (Varita, Molotov, etc.)
     [SerializeField] private List<BaseLauncher> allWeapons; 
 

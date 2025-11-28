@@ -17,7 +17,7 @@ public class OrbitalShieldLauncher : BaseLauncher
     [SerializeField] private int maxLevel = 10;
     [SerializeField] private GameObject ultimateOrbPrefab; // Prefab evolucionado
     
-    [Header("Ajustes de Zona (Evolución)")]
+    [Header("Zone settings (Evolution)")]
     [SerializeField] private float areaDamageInterval = 0.7f; 
     [Range(0.1f, 1f)]
     [SerializeField] private float areaDamageMultiplier = 0.5f; 

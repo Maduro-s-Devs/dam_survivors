@@ -7,7 +7,7 @@ public class MovementPlayer : MonoBehaviour
     //////////////////////////////VARIABLES////////////////////////////////////////////
     private bool puedeMoverse = true;
 
-    [Header("Ajustes")]
+    [Header("settings")]
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private float acceleration = 12f; // Qué tan rápido arranca
     [SerializeField] private float deceleration = 12f;  // Qué tan rápido frena 

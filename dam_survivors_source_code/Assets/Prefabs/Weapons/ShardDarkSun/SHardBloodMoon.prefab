@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3249084794190920859}
   - component: {fileID: 8001860241585939449}
   m_Layer: 0
-  m_Name: MolotovProjectile
+  m_Name: SHardBloodMoon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1c593ba77e9cba74181f3ef100910613, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,4 +127,10 @@ MonoBehaviour:
   explosionRadius: 3
   flightDuration: 1
   delayBetweenExplosions: 0.5
-  explosionVFX: {fileID: 8005277291160928309, guid: a15c0363232eb0441970986d1f3f640b, type: 3}
+  maxLevel: 10
+  napalmDuration: 5
+  napalmRadius: 6
+  napalmDamageInterval: 1
+  explosionVFX: {fileID: 0}
+  napalmStartVFX: {fileID: 0}
+  napalmZoneVFX: {fileID: 0}

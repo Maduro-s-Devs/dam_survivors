@@ -193,6 +193,8 @@ MonoBehaviour:
   molotovPrefab: {fileID: 1432756740983376002, guid: 6c196a655f4d17f4680b1ebcc5789e92, type: 3}
   throwRange: 8
   arcHeight: 5
+  maxLevel: 10
+  ultimateMolotovPrefab: {fileID: 1432756740983376002, guid: e72d6036db151bd4f91bf2eb9e1c7eb8, type: 3}
 --- !u!136 &2103920527906256109
 CapsuleCollider:
   m_ObjectHideFlags: 0

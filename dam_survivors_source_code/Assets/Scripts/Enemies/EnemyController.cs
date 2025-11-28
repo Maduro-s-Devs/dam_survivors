@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class EnemyController : MonoBehaviour
 {
-    [Header("Estadísticas del Enemigo")]
+    [Header("Enemie Stats")]
     [SerializeField] private float movementSpeed = 3f; // Velocidad de movimiento (Máxima)
     [SerializeField] private float acceleration = 2f;  // Cuánto tarda en alcanzar la velocidad máxima
     [SerializeField] private float maxHealth = 100f;    // Vida Máxima

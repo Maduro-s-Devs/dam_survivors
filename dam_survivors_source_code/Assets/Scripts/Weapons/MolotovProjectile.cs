@@ -4,20 +4,20 @@ using System.Collections;
 
 public class MolotovProjectile : MonoBehaviour
 {
-    [Header("Configuración de Explosión")]
+    [Header("Explosion configuration")]
     [SerializeField] private float explosionRadius = 3f; // Radio de daño
     [SerializeField] private float flightDuration = 1f;  // Tiempo de vuelo
     [SerializeField] private float delayBetweenExplosions = 0.3f; // Ritmo de las explosiones
     
-    [Header("Configuración Evolución")]
+    [Header("Evolution configuration")]
     [SerializeField] private int maxLevel = 10;
     [SerializeField] private float napalmDuration = 5f;      // Cuánto dura el fuego en el suelo
     [SerializeField] private float napalmRadius = 6f;        // Radio gigante
     [SerializeField] private float napalmDamageInterval = 1.0f; // Daño por tick
 
-    [Header("Efectos Visuales")]
+    [Header("VFX")]
     [SerializeField] private GameObject explosionVFX;    // Explosión Normal (Niveles 1-9)
-    [SerializeField] private GameObject napalmStartVFX;  // Explosión Inicial (Nivel 10)
+    [SerializeField] private GameObject napalmStartVFX;  // Explosión Inicial EVOLUCIONADA (Nivel 10)
     [SerializeField] private GameObject napalmZoneVFX;   // Fuego persistente (Suelo)
 
     // Variables internas
@@ -70,7 +70,7 @@ public class MolotovProjectile : MonoBehaviour
         GetComponent<Renderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
 
-        // ¿Modo Normal o Modo Napalm?
+        // DECISIÓN: ¿Modo Normal o Modo Napalm?
         if (weaponLevel >= maxLevel)
         {
             StartCoroutine(NapalmMode());
@@ -112,7 +112,7 @@ public class MolotovProjectile : MonoBehaviour
     {
         Debug.Log("¡MOLOTOV EVOLUCIONADO! Zona de Napalm activada.");
 
-        // EXPLOSIÓN INICIAL ESPECÍFICA (Usa el VFX de Napalm Start)
+        // EXPLOSIÓN INICIAL
         // Esto hace el daño de impacto inicial y muestra la explosión única
         CreateExplosion(transform.position, true, napalmStartVFX);
 
@@ -139,7 +139,7 @@ public class MolotovProjectile : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Función unificada para crear explosiones con VFX personalizado
+    // Ccrear explosiones con VFX personalizado
     private void CreateExplosion(Vector3 center, bool isMain, GameObject vfxToUse)
     {
         // --- INSTANCIAR EXPLOSIÓN ---
@@ -148,7 +148,7 @@ public class MolotovProjectile : MonoBehaviour
             Instantiate(vfxToUse, center, Quaternion.identity);
         }
         
-        // --- VISUALIZACIÓN DEBUG (Comentada) ---
+        // --- VISUALIZACIÓN DEBUG  ---
         /*
         GameObject debugSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         debugSphere.transform.position = center;
