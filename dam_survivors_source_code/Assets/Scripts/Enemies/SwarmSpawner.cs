@@ -12,16 +12,16 @@ public class SwarmSpawner : MonoBehaviour
         public int count;         // Cuántos de este tipo concreto
     }
 
-    [Header("Configuración de la Oleada")]
+    [Header("Wave configuration")]
     // Puedes añadir tantos tipos diferentes como quieras pulsando "+" en el Inspector.
     [SerializeField] private List<SpawnUnit> enemiesToSpawn; 
 
-    [Header("Configuración de Tiempo")]
+    [Header("Time configuration")]
     [SerializeField] private bool spawnOnAwake = true;    // ¿Invoca nada más nacer?
     [SerializeField] private bool loopSpawning = false;   // ¿Sigue invocando infinitamente?
     [SerializeField] private float spawnInterval = 10f;   // Tiempo entre casteo y casteo (si loop es true)
 
-    [Header("Configuración de Área")]
+    [Header("Area configuration")]
     [SerializeField] private float spawnRadius = 3f;      // Distancia a la que aparecen
 
     private float timer;

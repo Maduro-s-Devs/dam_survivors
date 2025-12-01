@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BaseLauncher : MonoBehaviour
 {
-    [Header("Estado del Arma")]
+    [Header("Weapon state")]
     // Si está FALSE, el arma existe pero no dispara. 
     // Lo ponemos false por defecto para que vengan bloqueadas.
     [SerializeField] protected bool isUnlocked = false; 
