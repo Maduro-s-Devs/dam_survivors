@@ -55,4 +55,19 @@ public class WeaponManager : MonoBehaviour
         }
         return null;
     }
+
+     // Función que devuelve TRUE si hay alguna arma desbloqueada en nivel 9 (Lista para evolucionar)
+    public bool HasWeaponReadyToEvolve()
+    {
+        foreach (BaseLauncher weapon in allWeapons)
+        {
+            // Verificamos si está desbloqueada y si su nivel es 9 para pasar a 10
+            // Asumiendo que 10 es el MaxLevel, si está en 9 significa que el siguiente es la evolución
+            if (weapon.isActiveAndEnabled && weapon.level == 9)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

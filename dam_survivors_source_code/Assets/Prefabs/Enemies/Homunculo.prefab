@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6262933789090204525}
   - component: {fileID: 4660463820013204449}
   - component: {fileID: 8490813995258842019}
+  - component: {fileID: -7339129757461396432}
   - component: {fileID: 220414510614284079}
   m_Layer: 3
   m_Name: Homunculo
@@ -142,6 +143,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &-7339129757461396432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877282008103584823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b47a3346e417774282a544974eb416f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LootDropper
+  lootTable:
+  - name: Health
+    prefab: {fileID: 381677928938394016, guid: 7c74ebed5768298439dc5ebe492ff337, type: 3}
+    dropChance: 0.5
+  - name: XP-1
+    prefab: {fileID: 3816968536968295488, guid: 731147f99aeba224ca18ebf6661b5019, type: 3}
+    dropChance: 100
+  normalChestPrefab: {fileID: 4667368795914751733, guid: ff17f3bd21ce75d4eb387219e00868ff, type: 3}
+  evolutionChestPrefab: {fileID: 4667368795914751733, guid: 4a447b8e41b5954459ab5b1ee8b14608, type: 3}
+  chestDropChance: 1
 --- !u!114 &220414510614284079
 MonoBehaviour:
   m_ObjectHideFlags: 0

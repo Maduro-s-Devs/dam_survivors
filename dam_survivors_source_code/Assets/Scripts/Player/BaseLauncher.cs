@@ -6,7 +6,7 @@ public class BaseLauncher : MonoBehaviour
     [Header("Weapon state")]
     // Si está FALSE, el arma existe pero no dispara. 
     // Lo ponemos false por defecto para que vengan bloqueadas.
-    [SerializeField] protected bool isUnlocked = false; 
+    [SerializeField] public bool isUnlocked = false; 
 
     [Header("Base Settings")]
     [SerializeField] protected float baseDamage = 10f;
