@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5123857393029328847}
   - component: {fileID: 2282522050361527477}
   - component: {fileID: 4072084483700623435}
+  - component: {fileID: 8255939857862917234}
   - component: {fileID: 3183224854757017911}
   m_Layer: 3
   m_Name: 'Futbolista '
@@ -142,6 +143,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &8255939857862917234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8444715176402975466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b47a3346e417774282a544974eb416f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LootDropper
+  lootTable:
+  - name: Health
+    prefab: {fileID: 381677928938394016, guid: 7c74ebed5768298439dc5ebe492ff337, type: 3}
+    dropChance: 1
+  - name: XP-1
+    prefab: {fileID: 3462617683158242004, guid: d88133c5e45b6f84f98e4355237782c2, type: 3}
+    dropChance: 100
+  normalChestPrefab: {fileID: 4667368795914751733, guid: ff17f3bd21ce75d4eb387219e00868ff, type: 3}
+  evolutionChestPrefab: {fileID: 4667368795914751733, guid: 4a447b8e41b5954459ab5b1ee8b14608, type: 3}
+  chestDropChance: 2
 --- !u!114 &3183224854757017911
 MonoBehaviour:
   m_ObjectHideFlags: 0

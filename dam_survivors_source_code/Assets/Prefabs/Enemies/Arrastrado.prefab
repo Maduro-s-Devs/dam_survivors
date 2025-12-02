@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8163302730954280631}
   - component: {fileID: 3858605111661208876}
   - component: {fileID: 9178820735218050494}
+  - component: {fileID: -8553996977529398372}
   - component: {fileID: 1320516285783377459}
   m_Layer: 3
   m_Name: Arrastrado
@@ -162,6 +163,31 @@ MonoBehaviour:
   loopSpawning: 1
   spawnInterval: 15
   spawnRadius: 3
+--- !u!114 &-8553996977529398372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4217809638970239186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b47a3346e417774282a544974eb416f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LootDropper
+  lootTable:
+  - name: Health
+    prefab: {fileID: 381677928938394016, guid: 7c74ebed5768298439dc5ebe492ff337, type: 3}
+    dropChance: 2
+  - name: XP-2
+    prefab: {fileID: 2616573439465899018, guid: 36d719233616b7744bf7fef81d1c09db, type: 3}
+    dropChance: 100
+  - name: XP-3
+    prefab: {fileID: 3462617683158242004, guid: d88133c5e45b6f84f98e4355237782c2, type: 3}
+    dropChance: 50
+  normalChestPrefab: {fileID: 4667368795914751733, guid: ff17f3bd21ce75d4eb387219e00868ff, type: 3}
+  evolutionChestPrefab: {fileID: 4667368795914751733, guid: 4a447b8e41b5954459ab5b1ee8b14608, type: 3}
+  chestDropChance: 0.01
 --- !u!114 &1320516285783377459
 MonoBehaviour:
   m_ObjectHideFlags: 0

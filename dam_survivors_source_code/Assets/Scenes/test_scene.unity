@@ -131,9 +131,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5229365275003543263, guid: 17ed06937142b6b4cbe013792087653f, type: 3}
+      propertyPath: baseWidth
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5229365275003543263, guid: 17ed06937142b6b4cbe013792087653f, type: 3}
+      propertyPath: baseDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5229365275003543263, guid: 17ed06937142b6b4cbe013792087653f, type: 3}
+      propertyPath: baseLength
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5229365275003543263, guid: 17ed06937142b6b4cbe013792087653f, type: 3}
+      propertyPath: isUnlocked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5229365275003543263, guid: 17ed06937142b6b4cbe013792087653f, type: 3}
+      propertyPath: baseCooldown
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7170994896786800421, guid: 17ed06937142b6b4cbe013792087653f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.7615
+      value: 29.08
       objectReference: {fileID: 0}
     - target: {fileID: 7170994896786800421, guid: 17ed06937142b6b4cbe013792087653f, type: 3}
       propertyPath: m_LocalPosition.y

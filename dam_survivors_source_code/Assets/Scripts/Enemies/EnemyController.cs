@@ -77,7 +77,11 @@ public class EnemyController : MonoBehaviour
 
     private void Die()
     {
-        // Soltar experiencia
+        LootDropper looter = GetComponent<LootDropper>();
+        if (looter != null)
+        {
+            looter.DropLoot();
+        }
         Destroy(gameObject);
     }
 

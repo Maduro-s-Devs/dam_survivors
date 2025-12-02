@@ -147,7 +147,7 @@ public class OrbitalShieldLauncher : BaseLauncher
         for (int i = 0; i < activeOrbs.Count; i++)
         {
             if (activeOrbs[i] == null) continue;
-
+            // Pasamos de grados a radianes 
             float currentOrbAngle = currentRotation + (i * angleStep);
             float angleRad = currentOrbAngle * Mathf.Deg2Rad;
 

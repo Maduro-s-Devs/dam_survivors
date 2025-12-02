@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 7170994896786800421}
   - component: {fileID: 5638712649667289130}
   - component: {fileID: 6431505717009396933}
+  - component: {fileID: 5882357788937866811}
   - component: {fileID: 751033678649503409}
   - component: {fileID: 9114710256661588021}
+  - component: {fileID: 5229365275003543263}
   - component: {fileID: -1222932320447074633}
   - component: {fileID: 718726796792763832}
   - component: {fileID: 429117126093478060}
@@ -97,6 +99,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5882357788937866811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560562008090355291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29d0567ea3ead0440863d3e62f5a57a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerExperience
+  currentLevel: 1
+  currentExperience: 0
+  maxExperience: 100
+  xpMultiplier: 1.2
+  pickupRadius: 5
 --- !u!114 &751033678649503409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,6 +148,31 @@ MonoBehaviour:
   - {fileID: 718726796792763832}
   - {fileID: -1222932320447074633}
   - {fileID: 429117126093478060}
+  - {fileID: 5229365275003543263}
+--- !u!114 &5229365275003543263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560562008090355291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c999a1495c3104aa5988799db8e62d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SlashLauncher
+  isUnlocked: 1
+  baseDamage: 10
+  baseCooldown: 1
+  level: 1
+  slashPrefab: {fileID: 8888684303187972085, guid: c208cf3743b06f646af5dd3c11eac55b, type: 3}
+  baseWidth: 2
+  baseLength: 1
+  widthMultiplier: 0.5
+  lengthMultiplier: 0.5
+  maxLevel: 10
+  ultimateSlashPrefab: {fileID: 8888684303187972085, guid: a4ef356bfcfe0b847892c280b0101d87, type: 3}
+  lifestealPerHit: 1
 --- !u!114 &-1222932320447074633
 MonoBehaviour:
   m_ObjectHideFlags: 0
