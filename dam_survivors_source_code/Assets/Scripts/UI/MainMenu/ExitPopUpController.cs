@@ -135,8 +135,6 @@ public class ExitPopUpController : MonoBehaviour
         // Aseguramos final limpio
         fadeOverlay.alpha = 1;
         if(backgroundMusic != null) backgroundMusic.volume = 0;
-
-        Debug.Log("👋 Adios Superviviente.");
         Application.Quit();
     }
 }

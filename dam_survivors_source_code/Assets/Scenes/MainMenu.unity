@@ -293,6 +293,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 673965670}
+  - {fileID: 1751410379}
   - {fileID: 2030762870}
   - {fileID: 1338115375}
   - {fileID: 1206164177}
@@ -2970,8 +2971,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -693, y: 311}
-  m_SizeDelta: {x: 1312.6016, y: 1312.6016}
+  m_AnchoredPosition: {x: -706, y: 317}
+  m_SizeDelta: {x: 1599.6411, y: 1599.6411}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1635266429
 MonoBehaviour:
@@ -3143,6 +3144,99 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1667790561}
+  m_CullTransparentMesh: 1
+--- !u!1 &1751410378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1751410379}
+  - component: {fileID: 1751410382}
+  - component: {fileID: 1751410381}
+  - component: {fileID: 1751410380}
+  m_Layer: 5
+  m_Name: RandomShowcase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1751410379
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751410378}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 249867996}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 602.23, y: -7.1315}
+  m_SizeDelta: {x: 1204.5, y: 1337.301}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1751410380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751410378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b60f407aec94947bbd6a809fce204e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RandomImageDisplay
+  imageList:
+  - {fileID: 21300000, guid: 0e9de794a6c46304b8d5f0834691b8cc, type: 3}
+  - {fileID: 21300000, guid: 3d0d31495dc4ff74f8bb7ffed780c06e, type: 3}
+  - {fileID: 21300000, guid: 3b84597b66d6cf548b3a6124b1f2ef63, type: 3}
+  preserveAspect: 1
+--- !u!114 &1751410381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751410378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1751410382
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751410378}
   m_CullTransparentMesh: 1
 --- !u!1 &1774408700
 GameObject:
@@ -3840,6 +3934,7 @@ MonoBehaviour:
   - {fileID: 1338115375}
   - {fileID: 1206164177}
   - {fileID: 1635266428}
+  - {fileID: 1751410379}
   pumpScale: 1.02
   returnSpeed: 10
 --- !u!114 &2112604671
@@ -3857,7 +3952,8 @@ MonoBehaviour:
   enterFromLeft:
   - {fileID: 2030762870}
   - {fileID: 1338115375}
-  enterFromRight: []
+  enterFromRight:
+  - {fileID: 1751410379}
   duration: 1
   startDelay: 0.1
   motionCurve:
