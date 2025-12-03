@@ -2654,6 +2654,7 @@ RectTransform:
   - {fileID: 385909207}
   - {fileID: 155969107}
   - {fileID: 1259488645}
+  - {fileID: 2045102573}
   m_Father: {fileID: 2106420375}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4520,6 +4521,7 @@ MonoBehaviour:
   cardsContainer: {fileID: 2108439482}
   cardPrefab: {fileID: 4609605213627548699, guid: b009b52c85d8a334db07311b099e1ad4, type: 3}
   gameplayHUD: {fileID: 1001869574}
+  delayBetweenCards: 0.15
 --- !u!1001 &1649754585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5771,12 +5773,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2045102572}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2106420375}
+  m_Father: {fileID: 1001869575}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6157,7 +6159,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2045102573}
   - {fileID: 1460579438}
   - {fileID: 1001869575}
   m_Father: {fileID: 0}
