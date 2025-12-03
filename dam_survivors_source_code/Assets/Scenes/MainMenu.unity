@@ -4029,7 +4029,7 @@ MonoBehaviour:
   fadeOverlay: {fileID: 643352609}
   backgroundMusic: {fileID: 2112604668}
   fadeDuration: 1
-  gameSceneName: test_scene
+  gameSceneName: MainMap
   optionsSceneName: OptionsMenu
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
