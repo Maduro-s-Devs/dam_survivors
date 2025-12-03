@@ -1,0 +1,68 @@
+using UnityEngine;
+
+public class PlayerHealth : MonoBehaviour
+{
+    [Header("Configuración de Vida")]
+    [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private float currentHealth;
+
+    // Propiedad para que la futura UI sepa cuánta vida queda
+    public float CurrentHealth => currentHealth;
+    public float MaxHealth => maxHealth;
+
+    private void Start()
+    {
+        currentHealth = maxHealth;
+    }
+
+    public void TakeDamage(float amount)
+    {
+        // Aplicamos el daño directamente sin preguntar
+        currentHealth -= amount;
+        Debug.Log($"[PLAYER] ¡Auch! Daño: {amount}. Vida restante: {currentHealth}");
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Heal(float amount)
+    {
+        currentHealth += amount;
+        
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        
+        Debug.Log($"[PLAYER] Curado: +{amount}. Vida actual: {currentHealth}");
+    }
+
+    private void Die()
+    {
+        currentHealth = 0;
+        Debug.LogError("--- GAME OVER --- Has muerto.");
+        
+        // Pausamos el juego
+        Time.timeScale = 0f;
+    }
+
+    // Esta función la llama Unity automáticamente cuando el CharacterController toca algo
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        // Buscamos el ID de la capa "Water" (Suele ser la capa 4 por defecto en Unity)
+        int waterLayerIndex = LayerMask.NameToLayer("Water");
+
+        // Si el objeto que tocamos tiene esa capa...
+        if (hit.gameObject.layer == waterLayerIndex)
+        {
+            if (currentHealth > 0)
+            {
+                Debug.Log("¡CAÍSTE A LA LAVA! Muerte instantánea.");
+                // Nos quitamos toda la vida que nos quede de golpe
+                TakeDamage(currentHealth); 
+            }
+        }
+    }
+}

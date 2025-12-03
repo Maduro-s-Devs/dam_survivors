@@ -1,4 +1,3 @@
-// Este script lo utilizan lons enemigo
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -13,10 +12,10 @@ public class LootDropper : MonoBehaviour
         public float dropChance;      
     }
 
-    [Header("Drops Configuration")]
+    [Header("Configuración de Drops")]
     [SerializeField] private List<LootItem> lootTable;
 
-    [Header("Special chests settings")]
+    [Header("Cofres Especiales")]
     [SerializeField] private GameObject normalChestPrefab;    
     [SerializeField] private GameObject evolutionChestPrefab; 
     [Range(0, 100)]
@@ -36,9 +35,9 @@ public class LootDropper : MonoBehaviour
         {
             if (Random.Range(0f, 100f) <= item.dropChance)
             {
-                // Que los items caigan al suelo
-                Vector3 itemPos = new Vector3(transform.position.x, 0f, transform.position.z);
-                Instantiate(item.prefab, itemPos, Quaternion.identity);
+                // Usamos la función inteligente para buscar el suelo
+                Vector3 spawnPos = GetGroundPosition();
+                Instantiate(item.prefab, spawnPos, Quaternion.identity);
             }
         }
     }
@@ -48,7 +47,7 @@ public class LootDropper : MonoBehaviour
         GameObject chestToSpawn = normalChestPrefab;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-        // EVOLUCIÓN
+        // LÓGICA DE EVOLUCIÓN
         if (player != null)
         {
             WeaponManager manager = player.GetComponent<WeaponManager>();
@@ -61,24 +60,35 @@ public class LootDropper : MonoBehaviour
 
         if (chestToSpawn != null)
         {
-            // CALCULAR POSICIÓN EN EL SUELO (Y = 0)
-            // Ignoramos la altura del enemigo y lo ponemos a ras de suelo.
-            Vector3 dropPosition = new Vector3(transform.position.x, 0f, transform.position.z);
+            // CAMBIO: Usamos la función inteligente para buscar el suelo
+            Vector3 dropPosition = GetGroundPosition();
 
-            // Instanciamos el cofre en el suelo
+            // Instanciamos el cofre
             GameObject chest = Instantiate(chestToSpawn, dropPosition, Quaternion.identity);
 
-            // HACER QUE MIRE AL JUGADOR
+            // CORRECCIÓN DE ROTACIÓN
             if (player != null)
             {
-                // Hacemos que el frente del cofre apunte al jugador
                 chest.transform.LookAt(player.transform);
-
-                // IMPORTANTE: Corregir inclinación
-                // Forzamos que la rotación en X y Z sea 0 para que el cofre esté plano en el suelo.
                 Vector3 currentRot = chest.transform.eulerAngles;
                 chest.transform.eulerAngles = new Vector3(0, currentRot.y, 0);
             }
         }
+    }
+
+    // BUSCADOR DE SUELO ---
+    private Vector3 GetGroundPosition()
+    {
+        RaycastHit hit;
+        // Lanzamos un rayo desde el ombligo del enemigo (transform.position + un poco arriba) hacia ABAJO
+        // para encontrar dónde está el suelo realmente.
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 100f))
+        {
+            // Si el rayo toca suelo, devolvemos ese punto exacto
+            return hit.point;
+        }
+        
+        // Si por lo que sea el rayo no toca nada devolvemos la posición del enemigo tal cual
+        return transform.position;
     }
 }

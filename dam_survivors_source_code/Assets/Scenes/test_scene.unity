@@ -194,7 +194,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 560562008090355291, guid: 17ed06937142b6b4cbe013792087653f, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 1359458724}
   m_SourcePrefab: {fileID: 100100000, guid: 17ed06937142b6b4cbe013792087653f, type: 3}
 --- !u!1 &1262627661
 GameObject:
@@ -308,6 +311,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1359458711 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 560562008090355291, guid: 17ed06937142b6b4cbe013792087653f, type: 3}
+  m_PrefabInstance: {fileID: 668605257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1359458724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359458711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0691b755b04fd114c91b4a2b1518cdea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 100
+  currentHealth: 0
+  invulnerabilityDuration: 0.5
 --- !u!1 &1691900278
 GameObject:
   m_ObjectHideFlags: 0

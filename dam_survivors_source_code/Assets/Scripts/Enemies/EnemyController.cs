@@ -85,12 +85,21 @@ public class EnemyController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Dañar al jugador al chocar
+    // Esto detecta el choque físico
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            // Lógica de daño al jugador
-        }
+        // Verifica el Tag 
+        if (collision.gameObject.CompareTag("Player")){
+        
+            // Busca el script de vida en el jugador
+            PlayerHealth playerHP = collision.gameObject.GetComponent<PlayerHealth>();
+            
+            // Le hace daño
+            if (playerHP != null)
+            {
+                playerHP.TakeDamage(damage);
+           
+            }
+        }  
     }
 }
