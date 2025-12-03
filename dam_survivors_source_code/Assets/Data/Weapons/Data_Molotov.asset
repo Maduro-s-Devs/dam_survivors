@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1931f4ce0c2fda34ab74e2fce4cd2fb8, type: 3}
+  m_Name: Data_Molotov
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponName: Dark Sun Shard
+  description: Upon impact, this obsidian bottle shatters, releasing its volatile
+    contents to create a devastating purple explosion of pure chaotic energy
+  icon: {fileID: 21300000, guid: c4456e813d4baec4a8d7801490ac32c2, type: 3}
+  levelUpDescriptions:
+  - Add an Extra Explotion upon impact that deals the 100% of the main Explotion
+    Damage. Increase Damage and Cast rate
+  - Add an Extra Explotion upon impact that deals the 100% of the main Explotion
+    Damage. Increase Damage and Cast rate
+  - Add an Extra Explotion upon impact that deals the 100% of the main Explotion
+    Damage. Increase Damage and Cast rate
+  - Add an Extra Explotion upon impact that deals the 100% of the main Explotion
+    Damage. Increase Damage and Cast rate
+  - Add an Extra Explotion upon impact that deals the 100% of the main Explotion
+    Damage. Increase Damage and Cast rate
+  - Add an Extra Explotion upon impact that deals the 100% of the main Explotion
+    Damage. Increase Damage and Cast rate
+  - Add an Extra Explotion upon impact that deals the 100% of the main Explotion
+    Damage. Increase Damage and Cast rate
+  - Add an Extra Explotion upon impact that deals the 100% of the main Explotion
+    Damage. Increase Damage and Cast rate
+  evolvedName: Blood Moon Shard
+  evolvedDescription: Evolves by absorbing massive chaotic energy, turning its contents
+    crimson. It shatters into a cataclysmic crimson-red explosion that burns and
+    corrupts matter.
+  evolvedIcon: {fileID: 21300000, guid: 3af5d1a78236373488a05784f5bf1315, type: 3}

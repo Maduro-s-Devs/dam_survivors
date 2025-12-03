@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1931f4ce0c2fda34ab74e2fce4cd2fb8, type: 3}
+  m_Name: Data_Wand
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponName: Abyssal Stinger
+  description: A dark, slender wand that automatically fires concentrated Abyssal
+    projectiles at the nearest enemy targets.
+  icon: {fileID: 21300000, guid: 78844d976b880be40aabd1d538c4e308, type: 3}
+  levelUpDescriptions:
+  - Gain an extra projectile, extra damage and increase fire rate.
+  - Gain an extra projectile, extra damage and increase fire rate.
+  - Gain an extra projectile, extra damage and increase fire rate.
+  - Gain an extra projectile, extra damage and increase fire rate.
+  - Gain an extra projectile, extra damage and increase fire rate.
+  - Gain an extra projectile, extra damage and increase fire rate.
+  - Gain an extra projectile, extra damage and increase fire rate.
+  - Gain an extra projectile, extra damage and increase fire rate.
+  evolvedName: Mandate of Ruin
+  evolvedDescription: "The wielder\u2019s power culminates in an overwhelming, unstoppable
+    torrent. It unleashes an instantaneous, concentrated storm of countless crimson-red
+    projectiles that saturates the battleground, ensuring total annihilation."
+  evolvedIcon: {fileID: 21300000, guid: aab6c37710b0fd74e9dc0dbf652f05a8, type: 3}

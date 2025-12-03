@@ -1,6 +1,7 @@
 // este script lo usa Player
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -69,5 +70,24 @@ public class WeaponManager : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public List<BaseLauncher> GetAllWeapons()
+    {
+        return allWeapons;
+    }
+
+    public void ApplyUpgradeToWeapon(WeaponData dataToUpgrade)
+    {
+        BaseLauncher weapon = allWeapons.FirstOrDefault(w => w.weaponData == dataToUpgrade);
+
+        if (weapon != null)
+        {
+            weapon.Upgrade();
+        }
+        else
+        {
+            Debug.LogError($"WeaponManager: No se encontró Launcher para {dataToUpgrade.name}");
+        }
     }
 }

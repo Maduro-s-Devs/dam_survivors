@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class BaseLauncher : MonoBehaviour
 {
+    [Header("Identity")]
+    public WeaponData weaponData; // ScriptableObject que define el arma
+
     [Header("Weapon state")]
     // Si está FALSE, el arma existe pero no dispara. 
     // Lo ponemos false por defecto para que vengan bloqueadas.
@@ -41,12 +44,27 @@ public class BaseLauncher : MonoBehaviour
         }
     }
 
+    public void Upgrade()
+    {
+        if (!isUnlocked)
+        {
+            ActivateWeapon();
+        }
+        else
+        {
+            level++;
+        }
+        CalculateStats();
+    }
+
     // Método que llamará tu UI para desbloquear el arma (Marcos)
     public void ActivateWeapon()
     {
         isUnlocked = true;
+        level = 1; 
         // Reiniciar el timer para que dispare nada más desbloquearla
         cooldownTimer = 0f; 
+        CalculateStats();
         Debug.Log($"{gameObject.name} ha sido desbloqueada.");
     }
 

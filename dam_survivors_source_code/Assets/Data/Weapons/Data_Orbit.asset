@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1931f4ce0c2fda34ab74e2fce4cd2fb8, type: 3}
+  m_Name: Data_Orbit
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponName: Guardian of the Void
+  description: Void Orbs that orbit the wielder, dealing damage to nearby enemies.
+  icon: {fileID: 21300000, guid: 6020b8ee175b5a948a5de018b10709f6, type: 3}
+  levelUpDescriptions:
+  - Gain an extra void Orb and increase Damage
+  - Gain more damage.
+  - Gain an extra void Orb and increase Damage
+  - Gain more damage.
+  - Gain an extra void Orb and increase Damage
+  - Gain more damage.
+  - Gain an extra void Orb and increase Damage
+  - Gain more damage.
+  evolvedName: Herald of Chaos
+  evolvedDescription: Manifests as a greater number of spheres that orbit at high
+    velocity. The perimeter of the orbiting orbs creates an intense burning field
+    that constantly damages any enemy standing within the circle.
+  evolvedIcon: {fileID: 21300000, guid: 634a3ffec68e41f49ae47e505e72a882, type: 3}
