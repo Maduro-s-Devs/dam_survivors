@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Wave 4
   m_EditorClassIdentifier: Assembly-CSharp::WaveProfile
   groupsInWave:
-  - prefab: {fileID: 877282008103584823, guid: ee24d1735e6430545b0802522e0ef59e, type: 3}
-    enemiesPerGroup: 15
-    numberOfGroups: 4
-    timeBetweenGroups: 2
-    spawnRateWithinGroup: 0
   - prefab: {fileID: 8183439421015895937, guid: a3df5049fdf31be49b5d635b97d665d9, type: 3}
-    enemiesPerGroup: 12
-    numberOfGroups: 1
-    timeBetweenGroups: 10
+    enemiesPerGroup: 8
+    numberOfGroups: 40
+    timeBetweenGroups: 3
+    spawnRateWithinGroup: 0
+  - prefab: {fileID: 8444715176402975466, guid: de8d08fb3d1debf47b9b38cb0e818098, type: 3}
+    enemiesPerGroup: 1
+    numberOfGroups: 8
+    timeBetweenGroups: 15
     spawnRateWithinGroup: 0
   specialEnemy: {fileID: 0}
   specialCount: 1

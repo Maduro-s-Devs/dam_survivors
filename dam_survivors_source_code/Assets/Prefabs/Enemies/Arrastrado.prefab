@@ -101,7 +101,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4217809638970239186}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 6682f1df3f32d584a9649c5593fa98ce, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -142,7 +142,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &9178820735218050494
 MonoBehaviour:
@@ -181,13 +181,13 @@ MonoBehaviour:
     dropChance: 2
   - name: XP-2
     prefab: {fileID: 2616573439465899018, guid: 36d719233616b7744bf7fef81d1c09db, type: 3}
-    dropChance: 100
+    dropChance: 25
   - name: XP-3
     prefab: {fileID: 3462617683158242004, guid: d88133c5e45b6f84f98e4355237782c2, type: 3}
-    dropChance: 50
+    dropChance: 75
   normalChestPrefab: {fileID: 4667368795914751733, guid: ff17f3bd21ce75d4eb387219e00868ff, type: 3}
   evolutionChestPrefab: {fileID: 4667368795914751733, guid: 4a447b8e41b5954459ab5b1ee8b14608, type: 3}
-  chestDropChance: 0.01
+  chestDropChance: 50
 --- !u!114 &1320516285783377459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +202,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   movementSpeed: 1.5
   acceleration: 3
-  maxHealth: 150
+  maxHealth: 300
   damage: 30
   attackCooldown: 1

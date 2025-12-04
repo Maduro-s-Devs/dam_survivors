@@ -15,8 +15,18 @@ MonoBehaviour:
   groupsInWave:
   - prefab: {fileID: 877282008103584823, guid: ee24d1735e6430545b0802522e0ef59e, type: 3}
     enemiesPerGroup: 15
-    numberOfGroups: 4
+    numberOfGroups: 30
     timeBetweenGroups: 4
+    spawnRateWithinGroup: 0
+  - prefab: {fileID: 8183439421015895937, guid: a3df5049fdf31be49b5d635b97d665d9, type: 3}
+    enemiesPerGroup: 4
+    numberOfGroups: 15
+    timeBetweenGroups: 8
+    spawnRateWithinGroup: 0
+  - prefab: {fileID: 4217809638970239186, guid: c1ec73f36d3a73e449cd62ba7e055a06, type: 3}
+    enemiesPerGroup: 1
+    numberOfGroups: 4
+    timeBetweenGroups: 30
     spawnRateWithinGroup: 0
   specialEnemy: {fileID: 0}
   specialCount: 1

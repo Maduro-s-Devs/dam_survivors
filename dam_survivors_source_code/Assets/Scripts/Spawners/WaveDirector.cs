@@ -4,115 +4,95 @@ using System.Collections.Generic;
 
 public class WaveDirector : MonoBehaviour
 {
-    [Header("Configuration")]
-    // Arrastra aquí tus archivos Wave 1, Wave 2, etc.
-    [SerializeField] private List<WaveProfile> allWaves; 
-    
-    [SerializeField] private Transform playerTransform; 
-    [SerializeField] private float spawnRadius = 15f; // Distancia a la que aparecen los enemigos   
+    [System.Serializable]
+    public class WaveScheduleItem
+    {
+        public WaveProfile waveData;   // El archivo de la oleada
+        public float startTime;        // Segundo exacto en que empieza
+    }
 
-    // Referencia interna al Timer para coordinar (opcional si usamos lógica de secuencia)
+    [Header("Configuración de Tiempo")]
+    [SerializeField] private List<WaveScheduleItem> schedule; 
+    
+    [Header("Configuración de Spawn")]
+    [SerializeField] private Transform playerTransform; 
+    [SerializeField] private float spawnRadius = 15f; 
+    [SerializeField] private LayerMask invalidLayers; // Capas prohibidas 
+    [SerializeField] private float spawnHeightOffset = 1.5f; // Para que no nazcan enterrados
+    
     private GameTimer gameTimer;
     private int currentWaveIndex = 0;
-    private bool isWaveActive = false;
+    private float nextWaveTime = 0f;
 
     private void Start()
     {
-        // Buscamos al Player automáticamente si no está asignado
         if (playerTransform == null)
         {
             GameObject p = GameObject.FindGameObjectWithTag("Player");
             if (p != null) playerTransform = p.transform;
         }
 
-        // Buscamos el Timer (necesario para eventos de fin de juego/Boss)
         gameTimer = FindObjectOfType<GameTimer>();
 
-        // Arrancamos la primera oleada inmediatamente
-        StartNextWave();
+        // Ordenamos la lista por tiempo para evitar errores humanos
+        schedule.Sort((x, y) => x.startTime.CompareTo(y.startTime));
+
+        if (schedule.Count > 0)
+        {
+            nextWaveTime = schedule[0].startTime;
+        }
     }
 
     private void Update()
     {
-        // Aquí podrías añadir lógica si necesitas pausar oleadas o esperar al Timer
-        // De momento, el sistema funciona por secuencia: acaba una -> empieza la otra.
+        if (currentWaveIndex >= schedule.Count) return;
+
+        // Si el reloj llega al momento de la siguiente oleada...
+        if (gameTimer.CurrentTime >= nextWaveTime)
+        {
+            StartWave(schedule[currentWaveIndex].waveData);
+            
+            currentWaveIndex++;
+            
+            if (currentWaveIndex < schedule.Count)
+            {
+                nextWaveTime = schedule[currentWaveIndex].startTime;
+            }
+        }
     }
 
-    private void StartNextWave()
+    private void StartWave(WaveProfile profile)
     {
-        // Si se acabaron las oleadas, paramos (aquí iría la lógica de esperar al Boss)
-        if (currentWaveIndex >= allWaves.Count)
-        {
-            Debug.Log("--- ¡FIN DE TODAS LAS OLEADAS! (Esperando al Minuto 10) ---");
-            return;
-        }
-
-        WaveProfile profile = allWaves[currentWaveIndex];
-        Debug.Log($"<color=yellow> >>> INICIANDO OLEADA {currentWaveIndex + 1} <<< </color>");
-        
-        // Iniciamos el proceso de esta oleada
+        Debug.Log($"<color=yellow> >>> INICIANDO OLEADA: {profile.name} (T: {Mathf.Floor(gameTimer.CurrentTime)}s) <<< </color>");
         StartCoroutine(ProcessWave(profile));
     }
 
-    // Corrutina principal que gestiona la vida de una Oleada completa
     private IEnumerator ProcessWave(WaveProfile profile)
     {
-        isWaveActive = true;
-
-        // 1. EVENTO ESPECIAL (Si el archivo tiene un Special Enemy, como el Invocador)
+        // EVENTO ESPECIAL (Invocador, etc)
         if (profile.specialEnemy != null)
         {
-            Debug.Log($"[EVENTO] Spawn Especial: {profile.specialEnemy.name}");
-            for (int i = 0; i < profile.specialCount; i++) 
-            {
-                SpawnEnemy(profile.specialEnemy);
-            }
+            for (int i = 0; i < profile.specialCount; i++) SpawnEnemy(profile.specialEnemy);
         }
 
-        // 2. PROCESAR GRUPOS DE ENEMIGOS
-        // Creamos una lista de tareas para ejecutar todos los grupos configurados
-        List<Coroutine> activeGroups = new List<Coroutine>();
-
+        // GRUPOS DE ENEMIGOS
         foreach (var groupConfig in profile.groupsInWave)
         {
-            // Lanzamos la rutina de ese grupo (ej: Zánganos) y guardamos la referencia
-            Coroutine c = StartCoroutine(SpawnGroupRoutine(groupConfig));
-            activeGroups.Add(c);
+            StartCoroutine(SpawnGroupRoutine(groupConfig));
         }
-
-        // Esperamos a que TODOS los grupos de esta oleada terminen de salir
-        foreach (var c in activeGroups) yield return c;
-
-        // 3. FIN DE LA OLEADA
-        Debug.Log($"<color=green> --- Oleada {currentWaveIndex + 1} completada --- </color>");
-        
-        isWaveActive = false;
-        currentWaveIndex++;
-        
-        // Aquí podrías poner un "yield return new WaitForSeconds(5);" si quieres descanso entre oleadas
-        // Si no, arrancamos la siguiente inmediatamente:
-        StartNextWave();
+        yield return null;
     }
 
-    // Rutina que gestiona las ráfagas repetitivas (ej: "12 enemigos cada 5s")
     private IEnumerator SpawnGroupRoutine(WaveProfile.WaveGroup config)
     {
-        // Repetimos tantas veces como diga "Number Of Groups"
         for (int i = 0; i < config.numberOfGroups; i++)
         {
-            // Spawnear el bloque entero de enemigos (ej: los 12 de golpe)
             for (int j = 0; j < config.enemiesPerGroup; j++)
             {
                 SpawnEnemy(config.prefab);
-                
-                // Pequeñísimo retardo (0.1s) para que no salgan todos en el mismo milisegundo exacto
-                // y la CPU no sufra un pico
                 yield return new WaitForSeconds(0.1f); 
             }
 
-            Debug.Log($"[SPAWNER] Grupo {i+1}/{config.numberOfGroups} de {config.prefab.name} lanzado.");
-
-            // Si aún quedan grupos por salir, esperamos el tiempo definido (ej: 5s)
             if (i < config.numberOfGroups - 1)
             {
                 yield return new WaitForSeconds(config.timeBetweenGroups);
@@ -120,31 +100,54 @@ public class WaveDirector : MonoBehaviour
         }
     }
 
-    // Lógica para crear el enemigo en el mundo
     private void SpawnEnemy(GameObject prefab)
     {
         if (prefab == null || playerTransform == null) return;
 
-        // 1. Calcular posición aleatoria en un círculo alrededor del jugador
-        Vector2 randomCircle = Random.insideUnitCircle.normalized * spawnRadius;
-        Vector3 spawnPos = playerTransform.position + new Vector3(randomCircle.x, 0f, randomCircle.y);
+        Vector3 spawnPos = Vector3.zero;
+        bool validPositionFound = false;
+        int attempts = 0;
 
-        // 2. Ajustar la altura al suelo (Raycast) para que no nazcan en el aire o bajo tierra
-        spawnPos = GetGroundPosition(spawnPos);
-
-        // 3. Instanciar
-        Instantiate(prefab, spawnPos, Quaternion.identity);
-    }
-
-    // Función auxiliar para encontrar el suelo
-    private Vector3 GetGroundPosition(Vector3 pos)
-    {
-        RaycastHit hit;
-        // Lanzamos un rayo desde el cielo (+50 metros) hacia abajo
-        if (Physics.Raycast(pos + Vector3.up * 50f, Vector3.down, out hit, 100f))
+        // Búsqueda de suelo válido
+        while (!validPositionFound && attempts < 10)
         {
-            return hit.point; // Devolvemos el punto de impacto con la lava/tierra
+            attempts++;
+            Vector2 randomCircle = Random.insideUnitCircle.normalized * spawnRadius;
+            Vector3 potentialPos = playerTransform.position + new Vector3(randomCircle.x, 0f, randomCircle.y);
+
+            RaycastHit hit;
+            if (Physics.Raycast(potentialPos + Vector3.up * 50f, Vector3.down, out hit, 100f))
+            {
+                // Evitar lava
+                if (((1 << hit.collider.gameObject.layer) & invalidLayers) != 0) continue;
+
+                spawnPos = hit.point + (Vector3.up * spawnHeightOffset);
+                validPositionFound = true;
+            }
         }
-        return pos; // Si no encuentra suelo, usamos la posición original
+
+        if (validPositionFound)
+        {
+            GameObject enemyObj = Instantiate(prefab, spawnPos, Quaternion.identity);
+
+            // ---  ESCALADO DINÁMICO (Minuto 8+) ---
+            float currentTime = gameTimer.CurrentTime;
+            float scalingStartTime = 480f; // 8 Minutos
+
+            if (currentTime > scalingStartTime)
+            {
+                float timeOver = currentTime - scalingStartTime;
+                
+                // +10% de estadísticas cada 10 segundos extra
+                float multiplier = 1f + (timeOver * 0.01f); 
+
+                EnemyController controller = enemyObj.GetComponent<EnemyController>();
+                if (controller != null)
+                {
+                    controller.ApplyDifficultyScaling(multiplier);
+                }
+            }
+            // -----------------------------------------------
+        }
     }
 }

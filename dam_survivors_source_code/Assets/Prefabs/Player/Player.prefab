@@ -116,8 +116,8 @@ MonoBehaviour:
   levelManager: {fileID: 0}
   currentLevel: 1
   currentExperience: 0
-  maxExperience: 100
-  xpMultiplier: 1.2
+  maxExperience: 50
+  xpMultiplier: 1.25
   pickupRadius: 5
 --- !u!114 &751033678649503409
 MonoBehaviour:
@@ -166,9 +166,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlashLauncher
   weaponData: {fileID: 0}
-  isUnlocked: 1
-  baseDamage: 10
-  baseCooldown: 1
+  isUnlocked: 0
+  baseDamage: 50
+  baseCooldown: 3
   level: 1
   slashPrefab: {fileID: 8888684303187972085, guid: c208cf3743b06f646af5dd3c11eac55b, type: 3}
   baseWidth: 3

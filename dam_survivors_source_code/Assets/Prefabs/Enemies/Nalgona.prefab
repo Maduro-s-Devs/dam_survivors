@@ -100,7 +100,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8183439421015895937}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 6682f1df3f32d584a9649c5593fa98ce, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -141,7 +141,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &-7944483614056893196
 MonoBehaviour:
@@ -182,6 +182,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   movementSpeed: 15
   acceleration: 3
-  maxHealth: 50
+  maxHealth: 75
   damage: 25
   attackCooldown: 1

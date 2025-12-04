@@ -100,7 +100,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8444715176402975466}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 6682f1df3f32d584a9649c5593fa98ce, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -141,7 +141,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &8255939857862917234
 MonoBehaviour:
@@ -159,12 +159,12 @@ MonoBehaviour:
   - name: Health
     prefab: {fileID: 381677928938394016, guid: 7c74ebed5768298439dc5ebe492ff337, type: 3}
     dropChance: 1
-  - name: XP-1
+  - name: XP-3
     prefab: {fileID: 3462617683158242004, guid: d88133c5e45b6f84f98e4355237782c2, type: 3}
     dropChance: 100
   normalChestPrefab: {fileID: 4667368795914751733, guid: ff17f3bd21ce75d4eb387219e00868ff, type: 3}
   evolutionChestPrefab: {fileID: 4667368795914751733, guid: 4a447b8e41b5954459ab5b1ee8b14608, type: 3}
-  chestDropChance: 2
+  chestDropChance: 5
 --- !u!114 &3183224854757017911
 MonoBehaviour:
   m_ObjectHideFlags: 0

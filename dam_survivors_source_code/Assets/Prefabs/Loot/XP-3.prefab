@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49decaedb6c0a4e46b1d990894e29c50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::XPOrb
-  xpAmount: 100
+  xpAmount: 50
   moveSpeed: 5
   acceleration: 15
 --- !u!54 &-6806564383195730574

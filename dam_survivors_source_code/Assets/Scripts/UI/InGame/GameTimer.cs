@@ -4,14 +4,14 @@ using UnityEngine.Events; // Para conectar con Oleadas/Boss
 
 public class GameTimer : MonoBehaviour
 {
-    [Header("Referencias UI")]
+    [Header("UI")]
     [SerializeField] private TextMeshProUGUI timerText;
 
-    [Header("Configuración")]
+    [Header("Configuration")]
     [SerializeField] private float maxTimeInSeconds = 600f; // 10 Minutos (600s)
     [SerializeField] private float panicTime = 540f;        // 9 Minutos (Empieza a parpadear)
 
-    [Header("Eventos (Para Oleadas y Boss)")]
+    [Header("Boss spawn")]
     public UnityEvent OnTimerEnd; 
 
     // Propiedad pública para que el WaveManager lea el tiempo

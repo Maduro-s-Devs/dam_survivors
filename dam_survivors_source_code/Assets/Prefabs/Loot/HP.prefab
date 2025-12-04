@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2741032688645814277}
   - component: {fileID: 471567704386492054}
   - component: {fileID: 6136646943646913233}
+  - component: {fileID: -4506849121456352583}
   m_Layer: 0
   m_Name: HP
   m_TagString: Untagged
@@ -112,6 +113,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4506849121456352583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381677928938394016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 467862123ccb3d847b05e1660ce67ef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthPickup
+  healAmount: 25
 --- !u!1001 &5025533232924615622
 PrefabInstance:
   m_ObjectHideFlags: 0
