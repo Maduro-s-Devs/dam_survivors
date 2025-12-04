@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c2bdb6322ef9e439b13878487455bf, type: 3}
+  m_Name: Wave 6
+  m_EditorClassIdentifier: Assembly-CSharp::WaveProfile
+  groupsInWave:
+  - prefab: {fileID: 8183439421015895937, guid: a3df5049fdf31be49b5d635b97d665d9, type: 3}
+    enemiesPerGroup: 14
+    numberOfGroups: 3
+    timeBetweenGroups: 3
+    spawnRateWithinGroup: 0
+  - prefab: {fileID: 8444715176402975466, guid: de8d08fb3d1debf47b9b38cb0e818098, type: 3}
+    enemiesPerGroup: 12
+    numberOfGroups: 2
+    timeBetweenGroups: 5
+    spawnRateWithinGroup: 0
+  specialEnemy: {fileID: 0}
+  specialCount: 1
