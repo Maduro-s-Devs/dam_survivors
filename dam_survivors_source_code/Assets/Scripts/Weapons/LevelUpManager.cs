@@ -1,73 +1,128 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 public class LevelUpManager : MonoBehaviour
 {
     [Header("Referencias Generales")]
-    public WeaponManager weaponManager; // Script del Player
-    public GameObject levelUpPanel;     // El panel negro de fondo
-    public Transform cardsContainer;    // Donde se crean las cartas
-    public GameObject cardPrefab;       // El prefab de la carta
+    public WeaponManager weaponManager; 
+    public GameObject levelUpPanel;     
+    public Transform cardsContainer;    
+    
+    [Header("Prefabs de Cartas")]
+    public GameObject cardPrefab;          // Carta normal
+    public GameObject evolutionCardPrefab; // Carta dorada/especial
 
-    [Header("UI Juego (HUD)")]
-    public GameObject gameplayHUD;      // La vida, XP, joystick... para ocultarlo
+    [Header("UI Extra")]
+    public GameObject gameplayHUD;      
+    public GameObject allMaxedPanel; // Panel "Todo al Máximo"
 
-    [Header("Configuración Cascada")]
-    public float delayBetweenCards = 0.15f; // Tiempo de espera entre carta y carta
+    [Header("Configuración Animación")]
+    public float delayBetweenCards = 0.15f; 
 
     void Start()
     {
         levelUpPanel.SetActive(false);
+        if(allMaxedPanel != null) allMaxedPanel.SetActive(false);
         if(gameplayHUD != null) gameplayHUD.SetActive(true);
     }
 
-    // Esta función la llama el PlayerExperience al subir de nivel
-    public void ShowLevelUpOptions()
+    // --- ENTRADA 1: COFRE ---
+    public void OpenChest(bool isEvolvedChest)
     {
-        // 1. Pausar el juego
-        Time.timeScale = 0f;
-
-        // 2. Ocultar el HUD para limpiar la pantalla
-        if(gameplayHUD != null) gameplayHUD.SetActive(false);
-        
-        // 3. Limpiar cartas viejas
-        foreach (Transform child in cardsContainer) Destroy(child.gameObject);
-
-        // 4. Obtener 3 armas aleatorias
-        List<BaseLauncher> options = GetRandomWeapons(3);
-
-        // 5. Crear las cartas con EFECTO CASCADA
-        int index = 0;
-
-        foreach (var launcher in options)
+        if (isEvolvedChest)
         {
-            if(launcher.weaponData != null)
+            BaseLauncher weaponToEvolve = GetReadyEvolution();
+
+            if (weaponToEvolve != null)
             {
-                GameObject newCard = Instantiate(cardPrefab, cardsContainer);
-                
-                // Calculamos el retraso: Carta 1 = 0s, Carta 2 = 0.15s, Carta 3 = 0.30s
-                float myDelay = index * delayBetweenCards;
-                
-                // Pasamos el retraso al Setup de la carta
-                newCard.GetComponent<UpgradeCardUI>().Setup(launcher, this, myDelay);
-                
-                index++;
+                SetupPanel();
+                CreateCards(new List<BaseLauncher> { weaponToEvolve });
+            }
+            else
+            {
+                // Si es cofre evo pero no hay nada listo, damos mejora normal
+                ShowLevelUpOptions(); 
             }
         }
+        else
+        {
+            ShowLevelUpOptions(); // Cofre normal = Level Up normal
+        }
+    }
 
-        // 6. Mostrar el panel
+    // --- ENTRADA 2: SUBIDA DE NIVEL (XP) ---
+    public void ShowLevelUpOptions()
+    {
+        SetupPanel();
+
+        // Buscamos mejoras (Filtrando las evoluciones)
+        List<BaseLauncher> options = GetNormalUpgrades(3);
+
+        if (options.Count > 0)
+        {
+            CreateCards(options);
+        }
+        else
+        {
+            ShowMaxLevelMessage();
+        }
+    }
+
+    // --- LÓGICA INTERNA ---
+
+    void SetupPanel()
+    {
+        Time.timeScale = 0f;
+        if(gameplayHUD != null) gameplayHUD.SetActive(false);
+        foreach (Transform child in cardsContainer) Destroy(child.gameObject);
         levelUpPanel.SetActive(true);
     }
 
-    // Lógica para elegir armas al azar
-    List<BaseLauncher> GetRandomWeapons(int amount)
+    void CreateCards(List<BaseLauncher> launchers)
+    {
+        int index = 0;
+        foreach (var launcher in launchers)
+        {
+            if(launcher.weaponData != null)
+            {
+                // DECISIÓN: ¿Usamos carta normal o carta de evolución?
+                GameObject prefabToUse = cardPrefab;
+
+                // Si está lista para evolucionar (Nivel 9 -> 10) usamos la carta especial
+                if (launcher.isUnlocked && launcher.level == 9 && evolutionCardPrefab != null)
+                {
+                    prefabToUse = evolutionCardPrefab;
+                }
+
+                GameObject newCard = Instantiate(prefabToUse, cardsContainer);
+                
+                // Calculamos retraso para efecto cascada
+                float myDelay = index * delayBetweenCards;
+                
+                newCard.GetComponent<UpgradeCardUI>().Setup(launcher, this, myDelay);
+                index++;
+            }
+        }
+    }
+
+    void ShowMaxLevelMessage()
+    {
+        levelUpPanel.SetActive(true);
+        if (allMaxedPanel != null) allMaxedPanel.SetActive(true);
+        else CloseLevelUpMenu(); // Si no hay panel, cerramos para no bloquear
+    }
+
+    // Filtro para mejoras normales (Oculta las que esperan evolución)
+    List<BaseLauncher> GetNormalUpgrades(int amount)
     {
         List<BaseLauncher> allWeapons = new List<BaseLauncher>(weaponManager.GetAllWeapons());
-        List<BaseLauncher> selected = new List<BaseLauncher>();
+        
+        // Quitamos Nivel 10 (Max) y Nivel 9 (Esperando cofre)
+        allWeapons.RemoveAll(w => (w.isUnlocked && w.level >= 10) || (w.isUnlocked && w.level == 9));
 
-        // Opcional: No mostrar armas que ya están a nivel máximo
-        allWeapons.RemoveAll(w => w.level >= 10 && w.isUnlocked);
+        List<BaseLauncher> selected = new List<BaseLauncher>();
 
         for (int i = 0; i < amount; i++)
         {
@@ -79,14 +134,25 @@ public class LevelUpManager : MonoBehaviour
         return selected;
     }
 
-    // Al elegir una carta
+    // Filtro para encontrar armas listas para evolucionar
+    BaseLauncher GetReadyEvolution()
+    {
+        List<BaseLauncher> allWeapons = weaponManager.GetAllWeapons();
+        List<BaseLauncher> ready = allWeapons.Where(w => w.isUnlocked && w.level == 9).ToList();
+        if (ready.Count > 0) return ready[Random.Range(0, ready.Count)];
+        return null;
+    }
+
     public void SelectUpgrade(WeaponData data)
     {
         weaponManager.ApplyUpgradeToWeapon(data);
-        
+        CloseLevelUpMenu();
+    }
+
+    public void CloseLevelUpMenu()
+    {
         levelUpPanel.SetActive(false);
-        
-        // Volver a mostrar el HUD y reanudar el tiempo
+        if(allMaxedPanel != null) allMaxedPanel.SetActive(false);
         if(gameplayHUD != null) gameplayHUD.SetActive(true);
         Time.timeScale = 1f;
     }

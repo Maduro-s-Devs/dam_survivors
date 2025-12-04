@@ -16,6 +16,7 @@ MonoBehaviour:
   description: Void Orbs that orbit the wielder, dealing damage to nearby enemies.
   icon: {fileID: 21300000, guid: 6020b8ee175b5a948a5de018b10709f6, type: 3}
   levelUpDescriptions:
+  - Void Orbs that orbit the wielder, dealing damage to nearby enemies.
   - Gain an extra void Orb and increase Damage
   - Gain more damage.
   - Gain an extra void Orb and increase Damage

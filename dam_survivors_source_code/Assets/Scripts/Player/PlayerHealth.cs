@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    [Header("Referencias UI")]
+    [SerializeField] private HealthBarController healthBar; // <--- ARRASTRA AQUÍ TU BARRA (El Slider)
+    [SerializeField] private DamageFeedback damageFeedback;
+
     [Header("Configuración de Vida")]
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float currentHealth;
@@ -13,13 +17,25 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+        
+        // Sincronizamos la barra al iniciar
+        UpdateHealthUI();
     }
 
     public void TakeDamage(float amount)
     {
         // Aplicamos el daño directamente sin preguntar
         currentHealth -= amount;
+        
+        // Actualizamos la UI visualmente
+        UpdateHealthUI();
+
         Debug.Log($"[PLAYER] ¡Auch! Daño: {amount}. Vida restante: {currentHealth}");
+
+        if (damageFeedback != null)
+        {
+            damageFeedback.TriggerDamageEffect();
+        }
 
         if (currentHealth <= 0)
         {
@@ -36,12 +52,17 @@ public class PlayerHealth : MonoBehaviour
             currentHealth = maxHealth;
         }
         
+        // Actualizamos la UI visualmente
+        UpdateHealthUI();
+        
         Debug.Log($"[PLAYER] Curado: +{amount}. Vida actual: {currentHealth}");
     }
 
     private void Die()
     {
         currentHealth = 0;
+        UpdateHealthUI(); // Aseguramos que la barra baje a 0 visualmente
+        
         Debug.LogError("--- GAME OVER --- Has muerto.");
         
         // Pausamos el juego
@@ -63,6 +84,13 @@ public class PlayerHealth : MonoBehaviour
                 // Nos quitamos toda la vida que nos quede de golpe
                 TakeDamage(currentHealth); 
             }
+        }
+    }
+    private void UpdateHealthUI()
+    {
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(currentHealth, maxHealth);
         }
     }
 }

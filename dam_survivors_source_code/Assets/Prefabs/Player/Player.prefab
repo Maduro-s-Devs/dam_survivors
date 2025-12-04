@@ -112,6 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29d0567ea3ead0440863d3e62f5a57a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerExperience
+  xpBar: {fileID: 0}
+  levelManager: {fileID: 0}
   currentLevel: 1
   currentExperience: 0
   maxExperience: 100
@@ -133,6 +135,7 @@ MonoBehaviour:
   acceleration: 18
   deceleration: 12
   rotationSpeed: 30
+  gravity: -20
 --- !u!114 &9114710256661588021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,13 +165,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c999a1495c3104aa5988799db8e62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlashLauncher
+  weaponData: {fileID: 0}
   isUnlocked: 1
   baseDamage: 10
   baseCooldown: 1
   level: 1
   slashPrefab: {fileID: 8888684303187972085, guid: c208cf3743b06f646af5dd3c11eac55b, type: 3}
-  baseWidth: 2
-  baseLength: 1
+  baseWidth: 3
+  baseLength: 2
   widthMultiplier: 0.5
   lengthMultiplier: 0.5
   maxLevel: 10
@@ -186,6 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9e3bcf0ec182444b8674b182d8db1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbitalShieldLauncher
+  weaponData: {fileID: 0}
   isUnlocked: 0
   baseDamage: 10
   baseCooldown: 1.5
@@ -209,6 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1fd9a7d89e11c141a18072e958a0faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MagicWandLauncher
+  weaponData: {fileID: 0}
   isUnlocked: 0
   baseDamage: 35
   baseCooldown: 1
@@ -232,6 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7900bda6bbe30354a8e3a3e28dd2369e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MolotovLauncher
+  weaponData: {fileID: 0}
   isUnlocked: 0
   baseDamage: 60
   baseCooldown: 10

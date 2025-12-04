@@ -58,7 +58,6 @@ public class UpgradeCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
         if(visualsContainer == this.GetComponent<RectTransform>())
         {
-            Debug.LogError("🛑 ERROR: Has asignado el PADRE. Asigna el HIJO 'Visuals'.");
             return;
         }
 
@@ -171,26 +170,40 @@ public class UpgradeCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if(iconImage != null && myData.icon != null) iconImage.sprite = myData.icon;
         if(nameText != null) nameText.text = myData.weaponName;
 
+        // Lógica de textos
         if (launcher.isUnlocked && launcher.level == 9)
         {
+            // EVOLUCIÓN
             if(myData.evolvedIcon != null && iconImage != null) iconImage.sprite = myData.evolvedIcon;
             if(nameText != null) nameText.text = myData.evolvedName;
             if(descText != null) descText.text = myData.evolvedDescription;
-            if(levelText != null) { levelText.text = "¡EVOLUCIÓN!"; levelText.color = Color.magenta; }
+            if(levelText != null) { levelText.text = "¡EVOLVE!"; levelText.color = Color.magenta; }
         }
         else if (!launcher.isUnlocked)
         {
-            if(levelText != null) { levelText.text = "¡NUEVO!"; levelText.color = Color.yellow; }
-            if(descText != null) descText.text = (myData.levelUpDescriptions.Count > 0) ? myData.levelUpDescriptions[0] : "Desbloquea este arma.";
+            if(levelText != null) { levelText.text = "¡NEW!"; levelText.color = Color.yellow; }
+            
+            if(descText != null) 
+            {
+                if(myData.levelUpDescriptions.Count > 0) 
+                    descText.text = myData.levelUpDescriptions[0]; // ELEMENTO 0 AQUÍ
+                else 
+                    descText.text = "Desbloquea este arma.";
+            }
         }
         else
         {
-            if(levelText != null) { levelText.text = $"NIVEL {launcher.level} -> {launcher.level + 1}"; levelText.color = Color.cyan; }
+            if(levelText != null) { levelText.text = $"LEVEL {launcher.level} -> {launcher.level + 1}"; levelText.color = Color.cyan; }
+            
             if(descText != null)
             {
-                int idx = launcher.level - 1;
-                descText.text = (myData.levelUpDescriptions != null && idx < myData.levelUpDescriptions.Count && idx >= 0) 
-                    ? myData.levelUpDescriptions[idx] : "Mejora estadísticas.";
+                int idx = launcher.level; 
+
+                // Verificamos que la lista tenga ese elemento para no dar error
+                if (myData.levelUpDescriptions != null && idx < myData.levelUpDescriptions.Count && idx >= 0)
+                    descText.text = myData.levelUpDescriptions[idx];
+                else
+                    descText.text = "Mejora estadísticas.";
             }
         }
 

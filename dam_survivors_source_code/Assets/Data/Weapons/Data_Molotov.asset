@@ -17,6 +17,8 @@ MonoBehaviour:
     contents to create a devastating purple explosion of pure chaotic energy
   icon: {fileID: 21300000, guid: c4456e813d4baec4a8d7801490ac32c2, type: 3}
   levelUpDescriptions:
+  - Upon impact, this obsidian bottle shatters, releasing its volatile contents to
+    create a devastating purple explosion of pure chaotic energy
   - Add an Extra Explotion upon impact that deals the 100% of the main Explotion
     Damage. Increase Damage and Cast rate
   - Add an Extra Explotion upon impact that deals the 100% of the main Explotion

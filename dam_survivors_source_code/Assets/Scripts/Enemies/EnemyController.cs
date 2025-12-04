@@ -1,31 +1,31 @@
 // este script, lo llevan todos los enemigos menos el Boss
 using UnityEngine;
 
-// Añadimos esto para asegurarnos de que el enemigo tenga físicas
 [RequireComponent(typeof(Rigidbody))]
 public class EnemyController : MonoBehaviour
 {
     [Header("Enemie Stats")]
-    [SerializeField] private float movementSpeed = 3f; // Velocidad de movimiento (Máxima)
-    [SerializeField] private float acceleration = 2f;  // Cuánto tarda en alcanzar la velocidad máxima
-    [SerializeField] private float maxHealth = 100f;    // Vida Máxima
-    [SerializeField] private float damage = 10f;       // Daño al tocar al jugador
+    [SerializeField] private float movementSpeed = 3f; 
+    [SerializeField] private float acceleration = 2f;  
+    [SerializeField] private float maxHealth = 100f;    
+    [SerializeField] private float damage = 10f;       
 
-    private Transform playerTransform; // Referencia para saber dónde está el jugador
-    private float currentHealth;       // Vida actual
-    private float currentSpeed = 0f;   // Velocidad actual (empieza en 0 y sube)
-    
-    private Rigidbody rb;              // Referencia al componente físico
+    [Header("Attack Settings")]
+    [SerializeField] private float attackCooldown = 1.0f; // Tiempo de espera entre golpes (1s)
+
+    private Transform playerTransform; 
+    private float currentHealth;       
+    private float currentSpeed = 0f;   
+    private Rigidbody rb;              
+
+    // Variable interna para controlar el tiempo
+    private float damageTimer = 0f; 
 
     private void Start()
     {
-        // Inicializar vida
         currentHealth = maxHealth;
-
-        // Obtener el Rigidbody para las físicas
         rb = GetComponent<Rigidbody>();
 
-        // Buscar al jugador automáticamente por su Tag
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
@@ -33,14 +33,22 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("¡No se encuentra al Player! el Tag 'Player'.");
+            Debug.LogError("¡No se encuentra al Player! Revisa el Tag 'Player'.");
         }
     }
 
-    // Usamos FixedUpdate en lugar de Update para cálculos de físicas constantes
+    private void Update()
+    {
+        // El temporizador debe contar siempre, incluso si no estamos chocando,
+        // para que cuando volvamos a chocar esté listo si ya pasó el tiempo.
+        if (damageTimer > 0)
+        {
+            damageTimer -= Time.deltaTime;
+        }
+    }
+
     private void FixedUpdate()
     {
-        // Si el jugador existe, moverse hacia él
         if (playerTransform != null)
         {
             MoveTowardsPlayer();
@@ -49,25 +57,22 @@ public class EnemyController : MonoBehaviour
 
     private void MoveTowardsPlayer()
     {
-        //  Calcular dirección (Destino - Origen)
         Vector3 direction = (playerTransform.position - transform.position).normalized;
 
-        // Calculamos la aceleración
         currentSpeed = Mathf.MoveTowards(currentSpeed, movementSpeed, acceleration * Time.fixedDeltaTime);
         Vector3 targetVelocity = direction * currentSpeed;
 
-        // Mantenemos la Y original (rb.linearVelocity.y) para respetar la gravedad
         rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
 
-        // Mirar al jugador (para que el modelo rote)
         Vector3 lookPos = new Vector3(playerTransform.position.x, transform.position.y, playerTransform.position.z);
         transform.LookAt(lookPos);
     }
 
-    // Esta función será llamada por las armas
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
+
+        DamageNumberManager.Instance?.ShowDamage(amount, transform.position);
 
         if (currentHealth <= 0)
         {
@@ -85,20 +90,23 @@ public class EnemyController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Esto detecta el choque físico
+    // Usamos OnCollisionStay para detectar contacto continuo
     private void OnCollisionStay(Collision collision)
     {
-        // Verifica el Tag 
-        if (collision.gameObject.CompareTag("Player")){
-        
-            // Busca el script de vida en el jugador
-            PlayerHealth playerHP = collision.gameObject.GetComponent<PlayerHealth>();
-            
-            // Le hace daño
-            if (playerHP != null)
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // Solo atacamos si el temporizador ha llegado a 0
+            if (damageTimer <= 0)
             {
-                playerHP.TakeDamage(damage);
-           
+                PlayerHealth playerHP = collision.gameObject.GetComponent<PlayerHealth>();
+                
+                if (playerHP != null)
+                {
+                    playerHP.TakeDamage(damage);
+                    
+                    // Reiniciamos el temporizador al valor del cooldown (1s)
+                    damageTimer = attackCooldown;
+                }
             }
         }  
     }

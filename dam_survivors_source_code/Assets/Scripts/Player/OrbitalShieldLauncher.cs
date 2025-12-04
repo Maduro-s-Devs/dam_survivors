@@ -1,27 +1,27 @@
-// Este script lo utiliza el player
 using UnityEngine;
 using System.Collections.Generic;
 
 public class OrbitalShieldLauncher : BaseLauncher
 {
-    [Header("Shield Settings")]
-    [SerializeField] private GameObject orbPrefab;         // Prefab normal
+    [Header("Configuración Escudo")]
+    [SerializeField] private GameObject orbPrefab;         // Prefab normal (bola azul/blanca)
     [SerializeField] private float rotationSpeed = 100f;   // Velocidad de giro
     [SerializeField] private float orbitRadius = 3f;       // Distancia al jugador
     
-    // Variables para restaurar
+    // Variables para restaurar valores si reiniciamos
     private float defaultRotationSpeed = 100f;
     private float defaultOrbitRadius = 3f;
 
-    [Header("Evolution")]
+    [Header("Evolución (Nivel 10)")]
     [SerializeField] private int maxLevel = 10;
-    [SerializeField] private GameObject ultimateOrbPrefab; // Prefab evolucionado
+    [SerializeField] private GameObject ultimateOrbPrefab; // Prefab evolucionado (Escudo dorado/rojo)
     
-    [Header("Zone settings (Evolution)")]
-    [SerializeField] private float areaDamageInterval = 0.7f; 
+    [Header("Daño en Área (Solo Evolucionado)")]
+    [SerializeField] private float areaDamageInterval = 0.5f; 
     [Range(0.1f, 1f)]
-    [SerializeField] private float areaDamageMultiplier = 0.5f; 
+    [SerializeField] private float areaDamageMultiplier = 0.5f; // Hace la mitad de daño que un golpe directo
 
+    // Estado interno
     private List<GameObject> activeOrbs = new List<GameObject>();
     private float currentRotation = 0f;
     private float areaTimer = 0f;
@@ -30,9 +30,11 @@ public class OrbitalShieldLauncher : BaseLauncher
     {
         base.Start(); 
         
+        // Guardamos la configuración inicial
         defaultRotationSpeed = rotationSpeed;
         defaultOrbitRadius = orbitRadius;
 
+        // Si venía desbloqueado de serie, lo activamos
         if (isUnlocked)
         {
             SpawnOrbs();
@@ -40,42 +42,41 @@ public class OrbitalShieldLauncher : BaseLauncher
     }
 
     // Usamos LateUpdate para que las bolas sigan al jugador SUAVEMENTE
-    // sin importar lo rápido que te muevas.
     private void LateUpdate()
     {
         if (!isUnlocked) return;
 
-        // Movimiento Circular
+        // 1. Calcular giro
         currentRotation += rotationSpeed * Time.deltaTime; 
 
-        // Actualizamos posiciones
+        // 2. Mover bolas
         UpdateOrbPositions();
 
-        // Lógica de Evolución
+        // 3. Lógica de Evolución (Daño en Área constante)
         if (level >= maxLevel)
         {
             ApplyAreaDamage();
         }
     }
 
-    // Anulamos el Update normal para que no haga nada (usamos LateUpdate)
+    // Anulamos el Update normal del padre porque el escudo funciona distinto (siempre está activo)
     protected override void Update() { }
 
-    public new void ActivateWeapon() 
+    // --- MÉTODOS SOBRESCRITOS (LA SOLUCIÓN A TU ERROR) ---
+
+    public override void ActivateWeapon() 
     {
+        // Llama a la lógica base para poner isUnlocked = true y level = 1
         base.ActivateWeapon();
+        // Genera las bolas visualmente
         SpawnOrbs();
     }
-    
-    private void OnValidate()
-    {
-        CalculateStats();
-    }
 
-    public new void CalculateStats()
+    public override void CalculateStats()
     {
         base.CalculateStats(); 
         
+        // Si estamos jugando, regeneramos las bolas cada vez que cambien las stats (nivel)
         if (Application.isPlaying)
         {
             if (isUnlocked)
@@ -88,6 +89,8 @@ public class OrbitalShieldLauncher : BaseLauncher
             }
         }
     }
+
+    // --- LÓGICA INTERNA ---
 
     private void ClearActiveOrbs()
     {
@@ -102,31 +105,35 @@ public class OrbitalShieldLauncher : BaseLauncher
     {
         ClearActiveOrbs();
 
-        int orbCount = 3 + (level / 2);
+        // Fórmula: Empieza con 3, y gana 1 bola cada 2 niveles aprox.
+        int orbCount = 3 + (level / 2); 
         GameObject prefabToUse = orbPrefab;
         
+        // Si NO es evolución, usamos valores normales
         if (level < maxLevel) 
         {
-             rotationSpeed = defaultRotationSpeed;
-             orbitRadius = defaultOrbitRadius;
+            rotationSpeed = defaultRotationSpeed;
+            orbitRadius = defaultOrbitRadius;
         }
 
+        // SI ES EVOLUCIÓN (Nivel 10+)
         if (level >= maxLevel)
         {
-            orbCount += 5; 
+            orbCount += 4; // Muchas más bolas
             if (ultimateOrbPrefab != null) prefabToUse = ultimateOrbPrefab;
             
-            rotationSpeed = 200f; 
-            orbitRadius = 6f;     
+            rotationSpeed = 250f; // Gira mucho más rápido
+            orbitRadius = 5f;     // Se aleja más
         }
 
         if (orbCount > 0)
         {
             for (int i = 0; i < orbCount; i++)
             {
-                // Instanciamos como HIJO (para mantener orden) pero moveremos en global
+                // Instanciamos
                 GameObject newOrb = Instantiate(prefabToUse, transform); 
                 
+                // Configuramos daño
                 OrbitalProjectile script = newOrb.GetComponent<OrbitalProjectile>();
                 if (script != null) script.SetDamage(currentDamage);
 
@@ -134,7 +141,7 @@ public class OrbitalShieldLauncher : BaseLauncher
             }
         }
         
-        // Posicionamos inmediatamente para que no haya un frame "raro"
+        // Colocamos inmediatamente
         UpdateOrbPositions();
     }
 
@@ -147,26 +154,27 @@ public class OrbitalShieldLauncher : BaseLauncher
         for (int i = 0; i < activeOrbs.Count; i++)
         {
             if (activeOrbs[i] == null) continue;
-            // Pasamos de grados a radianes 
+            
+            // Matemáticas circulares (Seno y Coseno)
             float currentOrbAngle = currentRotation + (i * angleStep);
             float angleRad = currentOrbAngle * Mathf.Deg2Rad;
 
             float x = Mathf.Cos(angleRad) * orbitRadius;
             float z = Mathf.Sin(angleRad) * orbitRadius;
 
-            // Usamos transform.position (GLOBAL)
-            // Dónde está el jugador en el mundo + el offset del círculo.
-            // Al sobrescribir la .position cada frame, ignoramos la rotación del padre.
+            // Mover la bola. Usamos transform.position del jugador + el offset calculado
             activeOrbs[i].transform.position = transform.position + new Vector3(x, 0, z);
         }
     }
 
+    // Daño de zona pasivo (Solo Evolución)
     private void ApplyAreaDamage()
     {
         areaTimer -= Time.deltaTime;
 
         if (areaTimer <= 0f)
         {
+            // Detecta enemigos en todo el radio del escudo
             Collider[] enemiesInside = Physics.OverlapSphere(transform.position, orbitRadius, LayerMask.GetMask("Enemy"));
 
             foreach (var hit in enemiesInside)
@@ -183,10 +191,16 @@ public class OrbitalShieldLauncher : BaseLauncher
 
     private void OnDrawGizmosSelected()
     {
+        // Dibuja el radio en el editor para ver cuánto ocupa
         if (level >= maxLevel)
         {
             Gizmos.color = new Color(1, 0, 0, 0.2f); 
             Gizmos.DrawSphere(transform.position, orbitRadius);
+        }
+        else
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(transform.position, orbitRadius);
         }
     }
 }

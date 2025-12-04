@@ -17,6 +17,8 @@ MonoBehaviour:
     projectiles at the nearest enemy targets.
   icon: {fileID: 21300000, guid: 78844d976b880be40aabd1d538c4e308, type: 3}
   levelUpDescriptions:
+  - A dark, slender wand that automatically fires concentrated Abyssal projectiles
+    at the nearest enemy targets.
   - Gain an extra projectile, extra damage and increase fire rate.
   - Gain an extra projectile, extra damage and increase fire rate.
   - Gain an extra projectile, extra damage and increase fire rate.

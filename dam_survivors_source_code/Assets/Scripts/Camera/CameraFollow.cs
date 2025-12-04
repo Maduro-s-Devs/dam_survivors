@@ -5,6 +5,7 @@ public class CameraFollow : MonoBehaviour
 {
     [Header("CONFIGURACIÓN AUTOMÁTICA")]
     [SerializeField] private Renderer mapRenderer;
+    [SerializeField] private Camera referenceCamera; // <--- NUEVO: Para asignar la cámara hija
 
     [Header("Ajustes de Vista (Centrado)")]
     // Estos valores definen el ángulo y distancia ideal.
@@ -19,7 +20,8 @@ public class CameraFollow : MonoBehaviour
 
     private Transform target; 
     private Vector3 currentOffset;
-    private Camera cam;
+    
+    // Ya no usamos "cam" local, usamos "referenceCamera"
     private Controls control;
     private Plane groundPlane; // Plano matemático del suelo (Y=0)
 
@@ -29,7 +31,20 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
-        cam = GetComponent<Camera>();
+        // 1. INTENTO DE AUTODETECCIÓN
+        // Si no has arrastrado la cámara al inspector, la buscamos en los hijos
+        if (referenceCamera == null)
+        {
+            referenceCamera = GetComponentInChildren<Camera>();
+        }
+
+        // Si sigue sin encontrarla, error grave
+        if (referenceCamera == null)
+        {
+            Debug.LogError("🛑 ERROR CRÍTICO: El script CameraFollow (en CameraHolder) no encuentra ninguna Cámara en sus hijos.");
+            return;
+        }
+
         groundPlane = new Plane(Vector3.up, Vector3.zero); // Creamos un suelo infinito matemático en Y=0
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -37,17 +52,21 @@ public class CameraFollow : MonoBehaviour
         {
             target = playerObj.transform;
             
-            // Forzamos la cámara a la posición ideal
-            // Ignoramos dónde la pusiste en la escena. La ponemos en su sitio por código.
+            // Forzamos la posición ideal
             currentOffset = defaultOffset;
+            
+            // Movemos el HOLDER (Padre)
             transform.position = target.position + currentOffset;
+            
+            // Rotamos el HOLDER (Padre)
+            // Importante: La cámara hija debe tener rotación 0,0,0 para que herede esto
             transform.rotation = Quaternion.Euler(rotationAngleX, 0f, 0f);
         }
     }
 
     private void LateUpdate()
     {
-        if (target == null || mapRenderer == null) return;
+        if (target == null || mapRenderer == null || referenceCamera == null) return;
 
         // --- 1. Lógica de Zoom ---
         float scrollInput = control.Player.Zoom.ReadValue<float>();
@@ -62,10 +81,11 @@ public class CameraFollow : MonoBehaviour
 
         // Posición Ideal (Siguiendo al jugador)
         Vector3 finalPosition = target.position + currentOffset;
+        
         // Corregimos la posición si se sale del mapa.
         finalPosition = CorrectPositionInsideMap(finalPosition);
 
-        // Aplicar 
+        // Aplicar al PADRE (CameraHolder)
         transform.position = finalPosition;
     }
 
@@ -74,14 +94,18 @@ public class CameraFollow : MonoBehaviour
         // Obtenemos los límites reales del objeto mapa (Lava)
         Bounds mapBounds = mapRenderer.bounds;
         
-        // Colocamos la cámara imaginariamente donde quiere ir
+        // Mover temporalmente el transform para hacer el cálculo del rayo
+        Vector3 originalPos = transform.position;
         transform.position = desiredPos;
 
-        // Calculamos dónde miran los bordes de la pantalla
-        float topZ = GetGroundPointFromScreen(new Vector3(0.5f, 1f, 0)).z; // Borde Superior
-        float bottomZ = GetGroundPointFromScreen(new Vector3(0.5f, 0f, 0)).z; // Borde Inferior
-        float rightX = GetGroundPointFromScreen(new Vector3(1f, 0.5f, 0)).x; // Borde Derecho
-        float leftX = GetGroundPointFromScreen(new Vector3(0f, 0.5f, 0)).x; // Borde Izquierdo
+        // Calculamos dónde miran los bordes de la pantalla usando la CÁMARA HIJA
+        float topZ = GetGroundPointFromScreen(new Vector3(0.5f, 1f, 0)).z; 
+        float bottomZ = GetGroundPointFromScreen(new Vector3(0.5f, 0f, 0)).z; 
+        float rightX = GetGroundPointFromScreen(new Vector3(1f, 0.5f, 0)).x; 
+        float leftX = GetGroundPointFromScreen(new Vector3(0f, 0.5f, 0)).x; 
+
+        // Restaurar posición para no romper nada si era inválida
+        transform.position = originalPos;
 
         // Corregimos Z (Arriba/Abajo)
         float correctionZ = 0f;
@@ -100,7 +124,8 @@ public class CameraFollow : MonoBehaviour
     // Convierte un punto de la pantalla (0-1) a coordenada del mundo en el suelo
     private Vector3 GetGroundPointFromScreen(Vector3 viewportPoint)
     {
-        Ray ray = cam.ViewportPointToRay(viewportPoint);
+        // Usamos la cámara hija para lanzar el rayo
+        Ray ray = referenceCamera.ViewportPointToRay(viewportPoint);
         float distance;
         if (groundPlane.Raycast(ray, out distance))
         {
