@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro; // Necesario para el texto
 using UnityEngine.Events; // Para conectar con Oleadas/Boss
+using UnityEngine.SceneManagement; // --- NUEVO: Necesario para cambiar de escena ---
 
 public class GameTimer : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class GameTimer : MonoBehaviour
     [SerializeField] private float maxTimeInSeconds = 600f; // 10 Minutos (600s)
     [SerializeField] private float panicTime = 540f;        // 9 Minutos (Empieza a parpadear)
 
-    [Header("Boss spawn")]
+    [Header("Boss Transition")]
+    [SerializeField] private string bossSceneName = "BossArena"; // --- NUEVO: Nombre de la escena a cargar
     public UnityEvent OnTimerEnd; 
 
     // Propiedad pública para que el WaveManager lea el tiempo
@@ -80,8 +82,13 @@ public class GameTimer : MonoBehaviour
             timerText.text = "10:00";
         }
 
-        Debug.Log("¡TIEMPO AGOTADO! LLEGADA DEL JEFE.");
+        Debug.Log("¡TIEMPO AGOTADO! VIAJANDO A LA ARENA DEL BOSS...");
 
+        // Ejecutamos eventos previos (por si quieres guardar partida o lanzar sonido)
         OnTimerEnd.Invoke();
+
+        // CAMBIO DE ESCENA 
+        // Asegúrate de que la escena "BossArena" esté en File -> Build Settings
+        SceneManager.LoadScene(bossSceneName);
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7170994896786800421}
   - component: {fileID: 5638712649667289130}
   - component: {fileID: 6431505717009396933}
+  - component: {fileID: 3727490368163813903}
   - component: {fileID: 5882357788937866811}
   - component: {fileID: 751033678649503409}
   - component: {fileID: 9114710256661588021}
@@ -100,6 +101,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3727490368163813903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560562008090355291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a336b33a2a349a49969ed1a22cb1c94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeepOnLoad
 --- !u!114 &5882357788937866811
 MonoBehaviour:
   m_ObjectHideFlags: 0
