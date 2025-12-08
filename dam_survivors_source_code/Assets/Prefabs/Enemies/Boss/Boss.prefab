@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 308816117829090689}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.01, y: 0.487, z: 0.5}
+  m_LocalPosition: {x: -0.492, y: 0.3, z: 0.027}
   m_LocalScale: {x: 0.16666667, y: 0.16666667, z: 0.16666667}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45,8 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwarmSpawner
   enemiesToSpawn:
-  - prefab: {fileID: 8444715176402975466, guid: de8d08fb3d1debf47b9b38cb0e818098, type: 3}
+  - prefab: {fileID: 8444715176402975466, guid: 0e9c23c496ade6e4bb4b352147869175, type: 3}
     count: 10
+  - prefab: {fileID: 4217809638970239186, guid: 71cc9c5159f34794d96e951de87d6f37, type: 3}
+    count: 3
   spawnOnAwake: 0
   loopSpawning: 0
   spawnInterval: 10
@@ -76,7 +78,7 @@ Transform:
   m_GameObject: {fileID: 3027220830246287694}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.012, y: 0.487, z: -0.5}
+  m_LocalPosition: {x: 0.468, y: 0.226, z: -0.074}
   m_LocalScale: {x: 0.16666667, y: 0.16666667, z: 0.16666667}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -241,10 +243,10 @@ MonoBehaviour:
   maxHealth: 15000
   currentHealth: 0
   bossBodyVisual: {fileID: 0}
-  detectionRange: 20
+  detectionRange: 30
   bossRotationPart: {fileID: 0}
   firePointArm: {fileID: 6970062183856807698}
   fireballPrefab: {fileID: 8569303340469988090, guid: c40c63feeaa8eec42b202cc639eaa97c, type: 3}
   attackCycleCooldown: 3
   summonerArm: {fileID: 4590988479441081563}
-  summonInterval: 15
+  summonInterval: 10

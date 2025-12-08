@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8569303340469988090
+--- !u!1 &8444715176402975466
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8850609274629923375}
-  - component: {fileID: 3128113509831327399}
-  - component: {fileID: 1651492623934099969}
-  - component: {fileID: 7254779122460579067}
-  - component: {fileID: 2030996900807938435}
-  m_Layer: 0
-  m_Name: BossProyectile
-  m_TagString: Untagged
+  - component: {fileID: 8200932819935033570}
+  - component: {fileID: 9180020192994840726}
+  - component: {fileID: 5123857393029328847}
+  - component: {fileID: 2282522050361527477}
+  - component: {fileID: 4072084483700623435}
+  - component: {fileID: 3183224854757017911}
+  m_Layer: 3
+  m_Name: Futboss
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8850609274629923375
+--- !u!4 &8200932819935033570
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8569303340469988090}
+  m_GameObject: {fileID: 8444715176402975466}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.602, y: 0.31561837, z: 0.32293168}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.5, z: 0}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3128113509831327399
+--- !u!33 &9180020192994840726
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8569303340469988090}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1651492623934099969
+  m_GameObject: {fileID: 8444715176402975466}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &5123857393029328847
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8569303340469988090}
+  m_GameObject: {fileID: 8444715176402975466}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -68,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1c593ba77e9cba74181f3ef100910613, type: 2}
+  - {fileID: 2100000, guid: 2d379efb5d82bf54a9581b2efeb615fe, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,14 +92,14 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7254779122460579067
-SphereCollider:
+--- !u!136 &2282522050361527477
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8569303340469988090}
-  m_Material: {fileID: 0}
+  m_GameObject: {fileID: 8444715176402975466}
+  m_Material: {fileID: 13400000, guid: 6682f1df3f32d584a9649c5593fa98ce, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -106,24 +107,55 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 2
   m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2030996900807938435
+--- !u!54 &4072084483700623435
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8444715176402975466}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!114 &3183224854757017911
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8569303340469988090}
+  m_GameObject: {fileID: 8444715176402975466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc283db2510437246ab6fb8f5cf8a66a, type: 3}
+  m_Script: {fileID: 11500000, guid: 07900968c7b97bc4faa0ca5a06a4f6f3, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BossProjectile
-  speed: 15
-  damage: 20
-  lifeTime: 5
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+  movementSpeed: 2
+  acceleration: 2
+  maxHealth: 500
+  damage: 60
+  attackCooldown: 1
