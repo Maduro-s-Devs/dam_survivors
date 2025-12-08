@@ -7022,7 +7022,7 @@ MonoBehaviour:
   OnTimerEnd:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3849438963555430871, guid: d0d4af4f0d32db74e9b808e161dac3c2, type: 3}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: 
         m_Mode: 0
