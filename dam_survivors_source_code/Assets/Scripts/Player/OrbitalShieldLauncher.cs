@@ -14,7 +14,7 @@ public class OrbitalShieldLauncher : BaseLauncher
 
     [Header("Evolución (Nivel 10)")]
     [SerializeField] private int maxLevel = 10;
-    [SerializeField] private GameObject ultimateOrbPrefab; // Prefab evolucionado (Escudo dorado/rojo)
+    [SerializeField] private GameObject ultimateOrbPrefab; // Prefab evolucionado 
     
     [Header("Daño en Área (Solo Evolucionado)")]
     [SerializeField] private float areaDamageInterval = 0.5f; 
@@ -46,10 +46,10 @@ public class OrbitalShieldLauncher : BaseLauncher
     {
         if (!isUnlocked) return;
 
-        // 1. Calcular giro
+        // Calcular giro
         currentRotation += rotationSpeed * Time.deltaTime; 
 
-        // 2. Mover bolas
+        //over bolas
         UpdateOrbPositions();
 
         // 3. Lógica de Evolución (Daño en Área constante)
@@ -62,7 +62,7 @@ public class OrbitalShieldLauncher : BaseLauncher
     // Anulamos el Update normal del padre porque el escudo funciona distinto (siempre está activo)
     protected override void Update() { }
 
-    // --- MÉTODOS SOBRESCRITOS (LA SOLUCIÓN A TU ERROR) ---
+    // --- MÉTODOS SOBRESCRITOS  ---
 
     public override void ActivateWeapon() 
     {
