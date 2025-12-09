@@ -2303,6 +2303,10 @@ PrefabInstance:
       propertyPath: weaponData
       value: 
       objectReference: {fileID: 11400000, guid: 9ebbbbd0e54f6184cb31483e635542d5, type: 2}
+    - target: {fileID: 5229365275003543263, guid: 17ed06937142b6b4cbe013792087653f, type: 3}
+      propertyPath: baseCooldown
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5882357788937866811, guid: 17ed06937142b6b4cbe013792087653f, type: 3}
       propertyPath: xpBar
       value: 
@@ -7510,7 +7514,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  debugStartTime: 590
+  debugStartTime: 0
 --- !u!114 &1832935616
 MonoBehaviour:
   m_ObjectHideFlags: 0
