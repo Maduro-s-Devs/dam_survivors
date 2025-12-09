@@ -135,9 +135,17 @@ PrefabInstance:
       propertyPath: attackCycleCooldown
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2522466653394734198, guid: d0d4af4f0d32db74e9b808e161dac3c2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.505
+      objectReference: {fileID: 0}
     - target: {fileID: 3849438963555430871, guid: d0d4af4f0d32db74e9b808e161dac3c2, type: 3}
       propertyPath: m_Name
       value: Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 6970062183856807698, guid: d0d4af4f0d32db74e9b808e161dac3c2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.503
       objectReference: {fileID: 0}
     - target: {fileID: 7753337194652985549, guid: d0d4af4f0d32db74e9b808e161dac3c2, type: 3}
       propertyPath: m_LocalPosition.x
