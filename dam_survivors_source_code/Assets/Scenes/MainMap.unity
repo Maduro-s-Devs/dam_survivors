@@ -7661,7 +7661,6 @@ GameObject:
   - component: {fileID: 1618133226}
   - component: {fileID: 1618133227}
   - component: {fileID: 1618133228}
-  - component: {fileID: 1618133229}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -7777,7 +7776,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618133218}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5991d53324113ea4a8b6e5b9803486fa, type: 3}
   m_Name: 
@@ -7792,7 +7791,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618133218}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c92923ddb1b17548bc309e3883e38fe, type: 3}
   m_Name: 
@@ -7809,7 +7808,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618133218}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee6b731a1d700764695280324b2acee7, type: 3}
   m_Name: 
@@ -7957,37 +7956,6 @@ MonoBehaviour:
   introClip: {fileID: 8300000, guid: cb0f55eff9285d74ca4d7a0bf1a2b1fc, type: 3}
   loopClip: {fileID: 8300000, guid: d38b5910804516b41aad39d0f03e014d, type: 3}
   exactIntroDuration: 27.571
---- !u!114 &1618133229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618133218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae5cc1ba717c7ea46b439f90e8e7ecb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DebugMenu
-  uiPanel: {fileID: 25994185}
-  weaponManager: {fileID: 71249169}
-  playerExperience: {fileID: 588345063}
-  gameTimer: {fileID: 1832935615}
-  playerLevelText: {fileID: 950721021}
-  bossSkipText: {fileID: 1364849232}
-  weaponRows:
-  - nameId: 1
-    weaponNameText: {fileID: 503749667}
-    statusText: {fileID: 850675296}
-  - nameId: 2
-    weaponNameText: {fileID: 1820647576}
-    statusText: {fileID: 812385171}
-  - nameId: 3
-    weaponNameText: {fileID: 1103074813}
-    statusText: {fileID: 175482554}
-  - nameId: 4
-    weaponNameText: {fileID: 1077493829}
-    statusText: {fileID: 2130800608}
 --- !u!1001 &1649754585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10414,6 +10382,11 @@ GameObject:
   - component: {fileID: 2106420374}
   - component: {fileID: 2106420373}
   - component: {fileID: 2106420372}
+  - component: {fileID: 2106420376}
+  - component: {fileID: 2106420377}
+  - component: {fileID: 2106420380}
+  - component: {fileID: 2106420379}
+  - component: {fileID: 2106420378}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -10509,6 +10482,124 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2106420376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106420371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a63231c73bde734390cf41f8d9d4256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeepCanvasOnLoad
+--- !u!114 &2106420377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106420371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae5cc1ba717c7ea46b439f90e8e7ecb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DebugMenu
+  uiPanel: {fileID: 25994185}
+  weaponManager: {fileID: 71249169}
+  playerExperience: {fileID: 588345063}
+  gameTimer: {fileID: 1832935615}
+  playerLevelText: {fileID: 950721021}
+  bossSkipText: {fileID: 1364849232}
+  weaponRows:
+  - nameId: 1
+    weaponNameText: {fileID: 503749667}
+    statusText: {fileID: 850675296}
+  - nameId: 2
+    weaponNameText: {fileID: 1820647576}
+    statusText: {fileID: 812385171}
+  - nameId: 3
+    weaponNameText: {fileID: 1103074813}
+    statusText: {fileID: 175482554}
+  - nameId: 4
+    weaponNameText: {fileID: 1077493829}
+    statusText: {fileID: 2130800608}
+--- !u!114 &2106420378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106420371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c92923ddb1b17548bc309e3883e38fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageFeedback
+  bloodOverlay: {fileID: 90068928}
+  fadeSpeed: 1
+  cameraTransform: {fileID: 106418514}
+  shakeDuration: 0.2
+  shakeMagnitude: 0.3
+--- !u!114 &2106420379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106420371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5991d53324113ea4a8b6e5b9803486fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageNumberManager
+  digitPrefab: {fileID: 7614540475147953376, guid: 900b91660d48a264e8ccc197ca80ee06, type: 3}
+  staggerDelay: 0.01
+  spacing: 1
+--- !u!114 &2106420380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106420371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee6b731a1d700764695280324b2acee7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PauseController
+  pausePanel: {fileID: 15686216}
+  backgroundGroup: {fileID: 15686220}
+  leftContent: {fileID: 7005705}
+  rightContent: {fileID: 1881112563}
+  transitionOverlay: {fileID: 2056111744}
+  fadeOutDuration: 1
+  animationSpeed: 0.5
+  entryCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2108439481
 GameObject:
   m_ObjectHideFlags: 0
